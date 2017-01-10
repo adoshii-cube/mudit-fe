@@ -67,22 +67,23 @@ and open the template in the editor.
                             <h2 class="mdl-card__title-text">Login</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-                            <form action="#">
+                            <form method="post" action="login-check.jsp">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-width">
-                                    <input class="mdl-textfield__input" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" type="text" id="username">
+                                    <input class="mdl-textfield__input" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" type="text" id="username" name="username">
                                     <label class="mdl-textfield__label" for="username">Username</label>
                                     <span class="mdl-textfield__error">Please enter a valid email address</span>
                                 </div>
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-width">
-                                    <input class="mdl-textfield__input" type="password" id="password">
+                                    <input class="mdl-textfield__input" type="password" id="password" name="password">
                                     <label class="mdl-textfield__label" for="password">Password</label>
                                     <span class="mdl-textfield__error">Please enter a password</span>
                                 </div>
+                                <div class="mdl-card__actions mdl-card--border">
+                                    <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit" id="submit-button">Log in</button>
+                                </div>
                             </form>
                         </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit" id="submit-button">Log in</button>
-                        </div>
+
 
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -90,6 +91,6 @@ and open the template in the editor.
             </main>
         </div>
         <script src="js/material.min.js"></script>
-        <script src="js/mudit.js"></script>
+        <!--<script src="js/mudit.js"></script>-->
     </body>
 </html>
