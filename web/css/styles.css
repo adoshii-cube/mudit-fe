@@ -19,6 +19,10 @@ body {
     font-family: 'Roboto', 'sans-serif';
 }
 
+#corp_dashboard{
+    /*visibility: hidden;*/
+}
+
 /* Disable ugly boxes around images in IE10 */
 a img{
     border: 0px;
@@ -1028,70 +1032,21 @@ div .mdl-textfield__label:after {
     /*background-size: cover !important;*/
 }
 
-/*AXIS*/
-.card-text-align{
-    justify-content: center;
+/*AXIS DASHBOARD*/
+.mdl-chart__map{
+    height: 50vh;
+    /*width: 100vw;*/
 }
 
-.card-text-align div{
-    font-size: 2.5em;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    align-self: center;
-    color: inherit;
-    display: block;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    /*font-size: 24px;*/
-    font-weight: 300;
-    line-height: normal;
-    overflow: hidden;
-    -webkit-transform-origin: 149px 48px;
-    transform-origin: 149px 48px;
-    margin: 0;
+.mdl-chart__pie{
+    height: 40vh;
 }
 
-.mdl-card__extra--style{
-    line-height: 48px;
-    padding: 0 16px;
-    display: flex;
-    box-sizing: border-box;
-    align-items: center;
+.mdl-chart__bar{
+    height: 40vh;
 }
 
-.mdl-data-table td div{
-    text-overflow: ellipsis;
-    /*display: inline-block;*/
-    width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.empty-state{
-    margin: auto;
-}
-
-.empty-state img{
-    height: 60vh;
-    width: auto;
-}
-
-.mdl-data-table tbody tr:hover {
-    background-color: #E8EAF6;
-}
-
-.mdl-progress{
-    width: 96%;
-    margin: 0 auto;
-    display: none;
-}
-
-.mdl-layout__drawer p{
-    padding-left: 40px;
-    padding-right: 10px;
-}
-/*AXIS*/
+/*AXIS DASHBOARD*/
 
 @media screen and (max-width: 767px){
     .page-card {
