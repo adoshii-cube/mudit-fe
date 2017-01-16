@@ -1034,16 +1034,22 @@ div .mdl-textfield__label:after {
 
 /*AXIS DASHBOARD*/
 .mdl-chart__map{
-    height: 50vh;
+    /*height: 50vh;*/
     /*width: 100vw;*/
 }
 
 .mdl-chart__pie{
-    height: 40vh;
+    /*height: 40vh;*/
 }
 
 .mdl-chart__bar{
-    height: 40vh;
+    /*height: 40vh;*/
+}
+
+.mdl-chart__bar svg,
+.mdl-chart__map svg,
+.mdl-chart__pie svg{
+    margin: 0 auto;
 }
 
 /*AXIS DASHBOARD*/

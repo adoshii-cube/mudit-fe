@@ -111,17 +111,51 @@ and open the template in the editor.
                             <div class="mdl-card__title">
                                 <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
                             </div>
+                            <div class="reset">Range: <span class="filter"></span>
+                                <a>reset</a>
+                            </div>
                             <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
                             <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
                             <input type="hidden" id="pageNumber" value='<%=pageNumber%>'/>
                         </div>
                         <%}%>
-
-
                         <input type="hidden" id="rawData<%=pageNumber%>" value='<%=rawDataJSONArray%>'/>
                     </div>
                 </section>
-                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-2">
+                <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+                    <div class="mdl-grid">
+                        <%
+                            pageNumber = 2;
+
+                            for (int i = 0; i < chartList.size(); i++) {
+                                Chart chart = chartList.get(i);
+                                String chartType = chart.getChartType();
+                                String className = "";
+                                if (chartType.equals("Map")) {
+                                    className = "mdl-chart__map";
+                                } else if (chartType.equals("Pie")) {
+                                    className = "mdl-chart__pie";
+                                } else if (chartType.equals("Bar")) {
+                                    className = "mdl-chart__bar";
+                                }
+                        %>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>"
+                             id="pg<%=pageNumber%>_chart<%=chart.getChartId()%>">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
+                            </div>
+                            <div class="reset" style="visibility: hidden;">Range: <span class="filter"></span>
+                                <a href="javascript:pg<%=pageNumber%>_chart<%=chart.getChartId()%>.filterAll();dc.redrawAll();">reset</a>
+                            </div>
+                            <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
+                            <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
+                            <input type="hidden" id="pageNumber" value='<%=pageNumber%>'/>
+                        </div>
+                        <%}%>
+                        <input type="hidden" id="rawData<%=pageNumber%>" value='<%=rawDataJSONArray%>'/>
+                    </div>
+                </section>
+                <section class="mdl-layout__tab-panel" id="scroll-tab-3">
                     <!--<div class="page-content">-->
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="demo-chart-pie">
@@ -142,14 +176,7 @@ and open the template in the editor.
                     </div>
                     <!--</div>-->
                 </section>
-                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-3">
-                    <div class="page-content">
-                        <div class="mdl-grid">
-
-                        </div>
-                    </div>
-                </section>
-                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-4">
+                <section class="mdl-layout__tab-panel" id="scroll-tab-4">
                     <div class="page-content">
                         <div class="mdl-grid">
 
