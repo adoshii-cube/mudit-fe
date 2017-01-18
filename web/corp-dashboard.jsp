@@ -83,10 +83,13 @@ and open the template in the editor.
                 <p>Update one/many dropdowns to view the applicants list</p>
             </div>
             <main class="mdl-layout__content">
-                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                <%
+                    int totalPages = 4;
+                    for (int pageNumber = 1; pageNumber <= totalPages; pageNumber++) {%>
+                <section class="mdl-layout__tab-panel" id="scroll-tab-<%=pageNumber%>">
                     <div class="mdl-grid">
                         <%
-                            int pageNumber = 1;
+
                             ChartHelper ch = new ChartHelper();
                             List<Metric> rawData = ch.getChartDataForPage(pageNumber);
                             JSONArray rawDataInJSON = new JSONArray(rawData);
@@ -111,78 +114,16 @@ and open the template in the editor.
                             <div class="mdl-card__title">
                                 <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
                             </div>
-                            <div class="reset">Range: <span class="filter"></span>
-                                <a>reset</a>
-                            </div>
                             <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
                             <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
                             <input type="hidden" id="pageNumber" value='<%=pageNumber%>'/>
+                            <input type="hidden" id="totalPages" value='<%=totalPages%>'/>
                         </div>
                         <%}%>
                         <input type="hidden" id="rawData<%=pageNumber%>" value='<%=rawDataJSONArray%>'/>
                     </div>
                 </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-2">
-                    <div class="mdl-grid">
-                        <%
-                            pageNumber = 2;
-
-                            for (int i = 0; i < chartList.size(); i++) {
-                                Chart chart = chartList.get(i);
-                                String chartType = chart.getChartType();
-                                String className = "";
-                                if (chartType.equals("Map")) {
-                                    className = "mdl-chart__map";
-                                } else if (chartType.equals("Pie")) {
-                                    className = "mdl-chart__pie";
-                                } else if (chartType.equals("Bar")) {
-                                    className = "mdl-chart__bar";
-                                }
-                        %>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>"
-                             id="pg<%=pageNumber%>_chart<%=chart.getChartId()%>">
-                            <div class="mdl-card__title">
-                                <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
-                            </div>
-                            <div class="reset" style="visibility: hidden;">Range: <span class="filter"></span>
-                                <a href="javascript:pg<%=pageNumber%>_chart<%=chart.getChartId()%>.filterAll();dc.redrawAll();">reset</a>
-                            </div>
-                            <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
-                            <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
-                            <input type="hidden" id="pageNumber" value='<%=pageNumber%>'/>
-                        </div>
-                        <%}%>
-                        <input type="hidden" id="rawData<%=pageNumber%>" value='<%=rawDataJSONArray%>'/>
-                    </div>
-                </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-                    <!--<div class="page-content">-->
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="demo-chart-pie">
-                            <div class="reset" style="visibility: hidden;">Selected: <span class="filter"></span>
-                                <a href="javascript:yearRingChart.filterAll();dc.redrawAll();">reset</a>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="demo-chart-column">
-                            <div class="reset" style="visibility: hidden;">Range: <span class="filter"></span>
-                                <a href="javascript:spendHistChart.filterAll();dc.redrawAll();">reset</a>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="demo-chart-bar">
-                            <div class="reset" style="visibility: hidden;">Selected: <span class="filter"></span>
-                                <a href="javascript:spenderRowChart.filterAll();dc.redrawAll();">reset</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--</div>-->
-                </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-                    <div class="page-content">
-                        <div class="mdl-grid">
-
-                        </div>
-                    </div>
-                </section>
+                <%}%>
             </main>
         </div>
         <script src="js/material.min.js"></script>
@@ -191,89 +132,5 @@ and open the template in the editor.
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
         <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
         <script src="js/mudit.js"></script>
-        <script type="text/javascript">
-
-            var yearRingChart = dc.pieChart("#demo-chart-pie"),
-                    spendHistChart = dc.barChart("#demo-chart-column"),
-                    spenderRowChart = dc.rowChart("#demo-chart-bar");
-
-// use static or load via d3.csv("spendData.csv", function(error, spendData) {/* do stuff */});
-            var spendData = [
-                {Name: 'Mr A', Spent: '$40', Year: 2011},
-                {Name: 'Mr B', Spent: '$10', Year: 2011},
-                {Name: 'Mr C', Spent: '$40', Year: 2011},
-                {Name: 'Mr A', Spent: '$70', Year: 2012},
-                {Name: 'Mr B', Spent: '$20', Year: 2012},
-                {Name: 'Mr B', Spent: '$50', Year: 2013},
-                {Name: 'Mr C', Spent: '$30', Year: 2013}
-            ];
-
-// normalize/parse data
-            spendData.forEach(function (d) {
-                d.Spent = d.Spent.match(/\d+/);
-            });
-
-// set crossfilter
-            var ndx = crossfilter(spendData),
-                    yearDim = ndx.dimension(function (d) {
-                        return +d.Year;
-                    }),
-                    spendDim = ndx.dimension(function (d) {
-                        return Math.floor(d.Spent / 10);
-                    }),
-                    nameDim = ndx.dimension(function (d) {
-                        return d.Name;
-                    }),
-                    spendPerYear = yearDim.group().reduceSum(function (d) {
-                return +d.Spent;
-            }),
-                    spendPerName = nameDim.group().reduceSum(function (d) {
-                return +d.Spent;
-            }),
-                    spendHist = spendDim.group().reduceCount();
-            yearRingChart
-                    .dimension(yearDim)
-                    .group(spendPerYear)
-                    .innerRadius(50)
-                    .controlsUseVisibility(true);
-            spendHistChart
-                    .dimension(spendDim)
-                    .group(spendHist)
-                    .x(d3.scale.linear().domain([0, 10]))
-                    .elasticY(true)
-                    .controlsUseVisibility(true);
-            spendHistChart
-                    .xAxis()
-                    .tickFormat(function (d) {
-                        return d * 10
-                    }); // convert back to base unit
-            spendHistChart.yAxis().ticks(2);
-            spenderRowChart
-                    .dimension(nameDim)
-                    .group(spendPerName)
-                    .elasticX(true)
-                    .controlsUseVisibility(true);
-            function show_empty_message(chart) {
-                var is_empty = d3.sum(chart.group().all().map(chart.valueAccessor())) === 0;
-                var data = is_empty ? [1] : [];
-                var empty = chart.svg().selectAll('.empty-message').data(data);
-                empty.enter().append('text')
-                        .text('NO DATA!')
-                        .attr({
-                            'text-anchor': 'middle',
-                            'alignment-baseline': 'middle',
-                            class: 'empty-message',
-                            x: chart.margins().left + chart.effectiveWidth() / 2,
-                            y: chart.margins().top + chart.effectiveHeight() / 2
-                        })
-                        .style('opacity', 0);
-                empty.transition().duration(1000).style('opacity', 1);
-                empty.exit().remove();
-            }
-            spendHistChart.on('pretransition', show_empty_message);
-            spenderRowChart.on('pretransition', show_empty_message);
-            dc.renderAll();
-
-        </script>
     </body>
 </html>

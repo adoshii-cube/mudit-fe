@@ -1,106 +1,104 @@
-var jArray = $('#rawData1').val();
-var data = $.parseJSON(jArray);
-var cf = crossfilter(data);
-var metricName1 = cf.dimension(function (d) {
-    return d["metricName1"];
-});
-var metricNameGroup1 = metricName1.group();
-
-var metricName2 = cf.dimension(function (d) {
-    return d["metricName2"];
-});
-var metricNameGroup2 = metricName2.group();
-
-var metricName3 = cf.dimension(function (d) {
-    return d["metricName3"];
-});
-var metricNameGroup3 = metricName3.group();
-
-var metricName4 = cf.dimension(function (d) {
-    return d["metricName4"];
-});
-var metricNameGroup4 = metricName4.group();
-
-var metricName5 = cf.dimension(function (d) {
-    return d["metricName5"];
-});
-var metricNameGroup5 = metricName5.group();
-
-var metricName6 = cf.dimension(function (d) {
-    return d["metricName6"];
-});
-var metricNameGroup6 = metricName6.group();
-
 $(document).ready(function () {
+
+    
+    var totalPages = $('#totalPages').val();
+    for (var n = 1; n <= totalPages; n++) {
+        var jArray = $('#rawData' + n).val();
+        var data = $.parseJSON(jArray);
+        var cf = crossfilter(data);
+        var metricName1 = cf.dimension(function (d) {
+            return d["metricName1"];
+        });
+        var metricNameGroup1 = metricName1.group();
+
+        var metricName2 = cf.dimension(function (d) {
+            return d["metricName2"];
+        });
+        var metricNameGroup2 = metricName2.group();
+
+        var metricName3 = cf.dimension(function (d) {
+            return d["metricName3"];
+        });
+        var metricNameGroup3 = metricName3.group();
+
+        var metricName4 = cf.dimension(function (d) {
+            return d["metricName4"];
+        });
+        var metricNameGroup4 = metricName4.group();
+
+        var metricName5 = cf.dimension(function (d) {
+            return d["metricName5"];
+        });
+        var metricNameGroup5 = metricName5.group();
+
+        var metricName6 = cf.dimension(function (d) {
+            return d["metricName6"];
+        });
+        var metricNameGroup6 = metricName6.group();
+        $("div[id^='pg"+n+"']").each(function () {
+            var chartId = $(this).attr('id');
+            var chartType = $(this).find("#chartType").val();
+            var chartMetricId = $(this).find("#chartMetricId").val();
+            if (chartType === "Map") {
+
+            } else if (chartType === "Pie") {
+
+                switch (chartMetricId) {
+                    case "1":
+                        createPieChartUsingDc(chartId, metricName1, metricNameGroup1);
+                        break;
+                    case "2":
+                        createPieChartUsingDc(chartId, metricName2, metricNameGroup2);
+                        break;
+                    case "3":
+                        createPieChartUsingDc(chartId, metricName3, metricNameGroup3);
+                        break;
+                    case "4":
+                        createPieChartUsingDc(chartId, metricName4, metricNameGroup4);
+                        break;
+                    case "5":
+                        createPieChartUsingDc(chartId, metricName5, metricNameGroup5);
+                        break;
+                    case "6":
+                        createPieChartUsingDc(chartId, metricName6, metricNameGroup6);
+                        break;
+
+                }
+            } else if (chartType === "Bar") {
+                switch (chartMetricId) {
+                    case "1":
+                        createBarChartUsingDc(chartId, metricName1, metricNameGroup1);
+                        break;
+                    case "2":
+                        createBarChartUsingDc(chartId, metricName2, metricNameGroup2);
+                        break;
+                    case "3":
+                        createBarChartUsingDc(chartId, metricName3, metricNameGroup3);
+                        break;
+                    case "4":
+                        createBarChartUsingDc(chartId, metricName4, metricNameGroup4);
+                        break;
+                    case "5":
+                        createBarChartUsingDc(chartId, metricName5, metricNameGroup5);
+                        break;
+                    case "6":
+                        createBarChartUsingDc(chartId, metricName6, metricNameGroup6);
+                        break;
+
+                }
+            }
+
+        });
+    }
+
 //    $("body").css('visibility', 'visible');
-    $("div[id^='pg']").each(function () {
-        var chartId = $(this).attr('id');
-        var chartType = $(this).find("#chartType").val();
-        var chartMetricId = $(this).find("#chartMetricId").val();
-        if (chartType === "Map") {
-
-        } else if (chartType === "Pie") {
-
-            switch (chartMetricId) {
-                case "1":
-                    createPieChartUsingDc(chartId, metricName1, metricNameGroup1);
-                    break;
-                case "2":
-                    createPieChartUsingDc(chartId, metricName2, metricNameGroup2);
-                    break;
-                case "3":
-                    createPieChartUsingDc(chartId, metricName3, metricNameGroup3);
-                    break;
-                case "4":
-                    createPieChartUsingDc(chartId, metricName4, metricNameGroup4);
-                    break;
-                case "5":
-                    createPieChartUsingDc(chartId, metricName5, metricNameGroup5);
-                    break;
-                case "6":
-                    createPieChartUsingDc(chartId, metricName6, metricNameGroup6);
-                    break;
-
-            }
-        } else if (chartType === "Bar") {
-            switch (chartMetricId) {
-                case "1":
-                    createBarChartUsingDc(chartId, metricName1, metricNameGroup1);
-                    break;
-                case "2":
-                    createBarChartUsingDc(chartId, metricName2, metricNameGroup2);
-                    break;
-                case "3":
-                    createBarChartUsingDc(chartId, metricName3, metricNameGroup3);
-                    break;
-                case "4":
-                    createBarChartUsingDc(chartId, metricName4, metricNameGroup4);
-                    break;
-                case "5":
-                    createBarChartUsingDc(chartId, metricName5, metricNameGroup5);
-                    break;
-                case "6":
-                    createBarChartUsingDc(chartId, metricName6, metricNameGroup6);
-                    break;
-
-            }
-        }
-
-    });
+$("#scroll-tab-1").addClass("is-active");
 });
 
-$(".reset a").on('click',function(){
-        var x = $(this).parent().attr('id');
-        console.log("Parent ::: " + x);
-        
-        
-//    $(this).filterAll();
-//    dc.redrawAll();
-});
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
     var width = document.getElementById(chartId).offsetWidth;
-    var chart = dc.pieChart("#" + chartId);
+    chart = dc.pieChart("#" + chartId);
     chart
             .height(275)
             .width(width)
