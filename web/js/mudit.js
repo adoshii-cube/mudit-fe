@@ -214,7 +214,7 @@ function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
             .dimension(cfDimension)
 //            .margins({top: 10, right: 50, bottom: 30, left: 50})
             .group(cfGroup)
-            .legend(dc.legend().horizontal(true));
+            .legend(dc.legend().x(225).horizontal(false));
     chart.render();
 }
 

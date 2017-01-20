@@ -1049,6 +1049,7 @@ div .mdl-textfield__label:after {
 .mdl-chart__bar svg,
 .mdl-chart__map svg,
 .mdl-chart__pie svg{
+    width:80%;
     margin: 0 auto;
 }
 
