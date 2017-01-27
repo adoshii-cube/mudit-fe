@@ -85,8 +85,8 @@ and open the template in the editor.
             </div>
             <main class="mdl-layout__content">
                 <%
-                    int totalTabs = 4;
-                    for (int tabNumber = 1; tabNumber <= totalTabs; tabNumber++) {%>
+                   int totalTabs = 4;
+                   for (int tabNumber = 1; tabNumber <= totalTabs; tabNumber++) {%>
                 <section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">
                     <div class="page-content">
                         <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -120,44 +120,30 @@ and open the template in the editor.
                                         for (int i = 0; i < questionList1.size(); i++) {
                                             Question q = questionList1.get(i);
                                             int questionNum = q.getPageId();
-                                            List<Metric> rawData = ch.getChartDataForPage(questionNum);
-                                            JSONArray rawDataInJSON = new JSONArray(rawData);
-                                            String rawDataJSONArray = rawDataInJSON.toString();
-
-                                            List<Chart> chartList = ch.getChartMapping(questionNum);
-
-                                            for (int j = 0; j < chartList.size(); j++) {
-                                                Chart chart = chartList.get(j);
-                                                String chartType = chart.getChartType();
-                                                String className = "";
-                                                if (chartType.equals("Map")) {
-                                                    className = "mdl-chart__map";
-                                                } else if (chartType.equals("Pie")) {
-                                                    className = "mdl-chart__pie";
-                                                } else if (chartType.equals("Bar")) {
-                                                    className = "mdl-chart__bar";
-                                                }
-
                                     %>
                                     <div class="mdl-tabs__panel" id="tab<%=questionNum%>-panel"> 
+
                                         <div class="android-card-container mdl-grid">
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="pg<%=questionNum%>_chart<%=chart.getChartId()%>">
-                                                <div class="mdl-card__title">                                                   
-                                                     <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp" id="hiring-q1-chart1">
+                                                <div class="mdl-card__title">
+                                                    <h2 class="mdl-card__title-text">TAB <%=tabNumber%> Q<%=questionNum%> Chart 1</h2>
+
                                                 </div>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                     <%}%>
-                                    <input type="hidden" id="rawData<%=tabNumber%>" value='<%=rawDataJSONArray%>'/>
-                                    <%}%>                                   
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </section>
                 <%}%>
-                <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
 
 
             </main>
