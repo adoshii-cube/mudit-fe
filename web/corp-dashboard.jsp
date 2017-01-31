@@ -102,7 +102,7 @@ and open the template in the editor.
                                                 int questionNum = q.getPageId();
                                         %>
 
-                                        <a href="#tab<%=questionNum%>-panel" class="mdl-tabs__tab">
+                                        <a href="#tab<%=questionNum%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionNum%>">
                                             <!--<span class="hollow-circle"></span>-->
                                             <div>
                                                 <%=question%>
@@ -139,14 +139,18 @@ and open the template in the editor.
                                                     String chartType = chart.getChartType();
                                                     String className = "";
                                                     if (chartType.equals("Map")) {
-                                                        className = "mdl-chart__map";
+                                                        className = "mdl-chart__map mdl-cell--6-col";
                                                     } else if (chartType.equals("Pie")) {
-                                                        className = "mdl-chart__pie";
+                                                        className = "mdl-chart__pie mdl-cell--6-col";
                                                     } else if (chartType.equals("Bar")) {
-                                                        className = "mdl-chart__bar";
+                                                        className = "mdl-chart__bar mdl-cell--6-col";
+                                                    } else if (chartType.equals("Dropdown")) {
+                                                        className = "mdl-chart__dropdown mdl-cell--4-col";
+                                                    } else if (chartType.equals("Timeseries")) {
+                                                        className = "mdl-chart__timeseries mdl-cell--12-col";
                                                     }
                                             %>
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionNum%>_chart<%=chart.getChartId()%>">
+                                            <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionNum%>_chart<%=chart.getChartId()%>">
                                                 <div class="mdl-card__title">
                                                     <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
                                                 </div>
@@ -170,10 +174,12 @@ and open the template in the editor.
             </main>
         </div>
         <script src="js/material.min.js"></script>
+        <script src="js/mdl-selectfield.min.js"></script>
         <!--TO DO ADITYA ::: REPLACE JS URL WITH LOCAL-->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
-        <script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+        <!--<script type="text/javascript" src="http://dc-js.github.io/dc.js/js/dc.js"></script>-->
+        <script src="js/dc.js"></script>
         <script src="js/mudit.js"></script>
     </body>
 </html>

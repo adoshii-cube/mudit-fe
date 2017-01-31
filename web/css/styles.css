@@ -1042,8 +1042,22 @@ div .mdl-textfield__label:after {
     /*height: 40vh;*/
 }
 
+.mdl-chart__timeseries{
+    min-height: 100px;
+}
+
+.mdl-chart__dropdown{
+    min-height: 100px !important;
+    max-height: 100px !important;
+}
+
+.mdl-selectfield{
+    margin: 8px !important;
+    width: calc(33.3333333333% - 16px) !important;
+}
+
 .mdl-chart__bar svg{
-       width:80%;
+    width:80%;
 }
 .mdl-chart__map svg,
 .mdl-chart__pie svg{
@@ -1051,8 +1065,55 @@ div .mdl-textfield__label:after {
     margin: 0 auto;
 }
 
+select {
+    font-family: inherit;
+    background-color: transparent;
+    width: 90%;
+    margin: 0 auto;
+    padding: 4px 0;
+    font-size: 16px;
+    /* color: rgba(0,0,0, 0.26); */
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0, 0.12);
+}
+
+/* Remove focus */
+select:focus {
+    outline: none;
+}
+
+/* Hide label */
+.mdl-selectfield label {
+    display: none;
+}
+
+/* Use custom arrow */
+.mdl-selectfield select {
+    appearance: none;
+}
+
+.mdl-selectfield {
+    font-family: 'Roboto','Helvetica','Arial',sans-serif;
+    position: relative;
+}
+.mdl-selectfield:after {
+    position: absolute;
+    top: 0.75em;
+    right: 0.5em;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: .25em solid transparent;
+    border-right: .25em solid transparent;
+    border-top: 0.375em solid rgba(0,0,0, 0.12);
+    pointer-events: none;
+}
+
+
 .vertical-mdl-tabs {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 .vertical-mdl-tabs .mdl-tabs__tab-bar {
     -webkit-flex-direction: column;
