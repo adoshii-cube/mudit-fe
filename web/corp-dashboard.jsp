@@ -70,7 +70,7 @@ and open the template in the editor.
                 </div>
                 <!-- Bottom row, not visible on scroll -->
                 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Executive Dashboard</a>
+                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Hiring</a>
                     <a href="#scroll-tab-2" class="mdl-layout__tab">Demographics</a>
                     <a href="#scroll-tab-3" class="mdl-layout__tab">Experience</a>
                     <a href="#scroll-tab-4" class="mdl-layout__tab">Sourcing</a>
@@ -131,7 +131,7 @@ and open the template in the editor.
                                                 List<Metric> rawData = ch.getChartDataForPage(questionNum);
                                                 JSONArray rawDataInJSON = new JSONArray(rawData);
                                                 String rawDataJSONArray = rawDataInJSON.toString();
-
+                                                System.out.println("rawDataJSONArray ::::::::::: "+rawDataJSONArray);
                                                 List<Chart> chartList = ch.getChartMapping(questionNum);
 
                                                 for (int j = 0; j < chartList.size(); j++) {
@@ -139,11 +139,11 @@ and open the template in the editor.
                                                     String chartType = chart.getChartType();
                                                     String className = "";
                                                     if (chartType.equals("Map")) {
-                                                        className = "mdl-chart__map mdl-cell--6-col";
+                                                        className = "mdl-chart__map mdl-cell--4-col";
                                                     } else if (chartType.equals("Pie")) {
-                                                        className = "mdl-chart__pie mdl-cell--6-col";
+                                                        className = "mdl-chart__pie mdl-cell--4-col";
                                                     } else if (chartType.equals("Bar")) {
-                                                        className = "mdl-chart__bar mdl-cell--6-col";
+                                                        className = "mdl-chart__bar mdl-cell--4-col";
                                                     } else if (chartType.equals("Dropdown")) {
                                                         className = "mdl-chart__dropdown mdl-cell--4-col";
                                                     } else if (chartType.equals("Timeseries")) {

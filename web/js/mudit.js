@@ -19,8 +19,6 @@ $(document).ready(function () {
         for (var n = 1; n <= totalPages; n++) {
             var jArray = $('#rawData' + n).val();
             var data = $.parseJSON(jArray);
-//            console.log("data ::: " + jArray);
-            var chartData = data;
             var cf = crossfilter(data);
             var metricName1 = cf.dimension(function (d) {
                 return d["metricName1"];
@@ -35,14 +33,8 @@ $(document).ready(function () {
             });
             var metricNameGroup3 = metricName3.group();
 
-            var parseDate = d3.time.format.utc("%Y-%m-%d").parse;
-            chartData.forEach(function (d) {
-                d.metricName4 = parseDate(d.metricName4);
-            });
-
             var metricName4 = cf.dimension(function (d) {
                 return d["metricName4"];
-//                return d["metricName4"] ? d["metricName4"] : "";
             });
             var metricNameGroup4 = metricName4.group();
             var metricName5 = cf.dimension(function (d) {
@@ -53,6 +45,20 @@ $(document).ready(function () {
                 return d["metricName6"];
             });
             var metricNameGroup6 = metricName6.group();
+
+            var metricName7 = cf.dimension(function (d) {
+                return d["metricName7"];
+            });
+            var metricNameGroup7 = metricName7.group();
+//            var metricName8 = cf.dimension(function (d) {
+//                return d["metricName8"];
+//            });
+//            var metricNameGroup8 = metricName8.group();
+//            var metricName9 = cf.dimension(function (d) {
+//                return d["metricName9"];
+//            });
+//            var metricNameGroup9 = metricName9.group();
+
             $("div[id^='pg" + n + "']").each(function () {
                 var chartId = $(this).attr('id');
                 var chartType = $(this).find("#chartType").val();
@@ -79,6 +85,15 @@ $(document).ready(function () {
                         case "6":
                             createBubbleOverlayChart(chartId, metricName6, metricNameGroup6);
                             break;
+                        case "7":
+                            createBubbleOverlayChart(chartId, metricName7, metricNameGroup7);
+                            break;
+                        case "8":
+                            createBubbleOverlayChart(chartId, metricName8, metricNameGroup8);
+                            break;
+                        case "9":
+                            createBubbleOverlayChart(chartId, metricName9, metricNameGroup9);
+                            break;
                     }
                 } else if (chartType === "Pie") {
                     switch (chartMetricId) {
@@ -99,6 +114,15 @@ $(document).ready(function () {
                             break;
                         case "6":
                             createPieChartUsingDc(chartId, metricName6, metricNameGroup6);
+                            break;
+                        case "7":
+                            createPieChartUsingDc(chartId, metricName7, metricNameGroup7);
+                            break;
+                        case "8":
+                            createPieChartUsingDc(chartId, metricName8, metricNameGroup8);
+                            break;
+                        case "9":
+                            createPieChartUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
                 } else if (chartType === "Bar") {
@@ -121,6 +145,15 @@ $(document).ready(function () {
                         case "6":
                             createBarChartUsingDc(chartId, metricName6, metricNameGroup6);
                             break;
+                        case "7":
+                            createBarChartUsingDc(chartId, metricName7, metricNameGroup7);
+                            break;
+                        case "8":
+                            createBarChartUsingDc(chartId, metricName8, metricNameGroup8);
+                            break;
+                        case "9":
+                            createBarChartUsingDc(chartId, metricName9, metricNameGroup9);
+                            break;
                     }
                 } else if (chartType === "Dropdown") {
                     switch (chartMetricId) {
@@ -142,6 +175,15 @@ $(document).ready(function () {
                         case "6":
                             createDropdownUsingDc(chartId, metricName6, metricNameGroup6);
                             break;
+                        case "7":
+                            createDropdownUsingDc(chartId, metricName7, metricNameGroup7);
+                            break;
+                        case "8":
+                            createDropdownUsingDc(chartId, metricName8, metricNameGroup8);
+                            break;
+                        case "9":
+                            createDropdownUsingDc(chartId, metricName9, metricNameGroup9);
+                            break;
                     }
                 } else if (chartType === "Timeseries") {
                     switch (chartMetricId) {
@@ -155,13 +197,22 @@ $(document).ready(function () {
                             createTimeseriesUsingDc(chartId, metricName3, metricNameGroup3);
                             break;
                         case "4":
-                            createTimeseriesUsingDc(chartId, metricName4, metricNameGroup4, chartData);
+                            createTimeseriesUsingDc(chartId, metricName4, metricNameGroup4);
                             break;
                         case "5":
                             createTimeseriesUsingDc(chartId, metricName5, metricNameGroup5);
                             break;
                         case "6":
                             createTimeseriesUsingDc(chartId, metricName6, metricNameGroup6);
+                            break;
+                        case "7":
+                            createTimeseriesUsingDc(chartId, metricName7, metricNameGroup7);
+                            break;
+                        case "8":
+                            createTimeseriesUsingDc(chartId, metricName8, metricNameGroup8);
+                            break;
+                        case "9":
+                            createTimeseriesUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
                 }
@@ -268,12 +319,12 @@ $(document).ready(function () {
         var width = document.getElementById(chartId).offsetWidth;
         chart = dc.pieChart("#" + chartId);
         chart
-                .height(275)
+                .height(200)
                 .width(width)
                 .dimension(cfDimension)
 //            .margins({top: 10, right: 50, bottom: 30, left: 50})
                 .group(cfGroup)
-                .legend(dc.legend().x(225).horizontal(false));
+                .legend(dc.legend().x(175).horizontal(false));
 //        chart.filter = function () {};
         chart.render();
     }
@@ -282,10 +333,11 @@ $(document).ready(function () {
         var width = document.getElementById(chartId).offsetWidth;
         var chart = dc.rowChart("#" + chartId);
         chart
-                .height(275)
+                .height(200)
                 .width(width)
                 .dimension(cfDimension)
                 .group(cfGroup)
+//                .centerBar(true)
                 .legend(dc.legend());
 //        chart.filter = function () {};
 //            .elasticX(true)
@@ -305,66 +357,27 @@ $(document).ready(function () {
         chart.render();
     }
 
-    function createTimeseriesUsingDc(chartId, cfDimension, cfGroup, chartData) {
+    function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
 
         var chart = dc.barChart("#" + chartId);
-//        var parseDate = d3.time.format.utc("%Y-%m-%d").parse;
-//        chartData.forEach(function (d) {
-//            d.metricName4 = parseDate(d.metricName4);
-//        });
-
-        var minDate = cfDimension.bottom(1)[0].metricName4;
-        var maxDate = cfDimension.top(1)[0].metricName4;
 
         chart
                 .height(75)
                 .width(900)
-                .x(d3.time.scale().domain([minDate, maxDate]))
-                .xUnits(d3.time.days)
+                .x(d3.scale.ordinal()) // Need empty val to offset first value
+                .xUnits(dc.units.ordinal)
+//                .x(d3.time.scale().domain([minDate, maxDate]))
+//                .xUnits(d3.time.months)
                 .dimension(cfDimension)
                 .group(cfGroup)
-                .mouseZoomable(true)
+//                .renderHorizontalGridLines(true)
+//                .renderVerticalGridLines(true)
+//                .mouseZoomable(true)
                 .showYAxis(false)
-//                .elasticY(true)
+                .elasticY(true)
 //                .controlsUseVisibility(true)
                 .colors(['#303f9f'])
                 .render();
-//        d3.csv("personal_details_date.csv", function (error, data) {
-//            var parseDate = d3.time.format.utc("%y-%m-%d").parse;
-//            data.forEach(function (d) {
-//                d.ValidatedRecruiterDate = parseDate(d.ValidatedRecruiterDate);
-//            });
-//
-//            var cf = crossfilter(data),
-//                    runDimension = cf.dimension(function (d) {
-//                        return +d.ValidatedRecruiterDate;
-//                    }),
-//                    speedSumGroup = runDimension.group();
-//
-//            var minDate = runDimension.bottom(1)[0].ValidatedRecruiterDate;
-//            var maxDate = runDimension.top(1)[0].ValidatedRecruiterDate;
-//
-//            var chart = dc.barChart("#" + chartId);
-//            chart
-//                    .width(900)
-//                    .height(50)
-//                    .x(d3.time.scale().domain([minDate, maxDate]))
-//                    .xUnits(d3.time.months)
-//                    .elasticY(true)
-//                    .brushOn(true)
-//                    .dimension(runDimension)
-//                    .group(speedSumGroup)
-//                    .mouseZoomable(true)
-//                    .showYAxis(false)
-//                    .colors(['#303f9f']);
-////                    .render();
-//
-////            chart.yAxis().tickFormat(function (v) {
-////                return "";
-////            });
-//
-//            chart.render();
-//        });
     }
 
     $(".mdl-textfield__input").blur(function () {
