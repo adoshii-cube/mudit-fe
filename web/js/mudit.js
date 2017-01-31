@@ -50,14 +50,14 @@ $(document).ready(function () {
                 return d["metricName7"];
             });
             var metricNameGroup7 = metricName7.group();
-//            var metricName8 = cf.dimension(function (d) {
-//                return d["metricName8"];
-//            });
-//            var metricNameGroup8 = metricName8.group();
-//            var metricName9 = cf.dimension(function (d) {
-//                return d["metricName9"];
-//            });
-//            var metricNameGroup9 = metricName9.group();
+            var metricName8 = cf.dimension(function (d) {
+                return d["metricName8"];
+            });
+            var metricNameGroup8 = metricName8.group();
+            var metricName9 = cf.dimension(function (d) {
+                return d["metricName9"];
+            });
+            var metricNameGroup9 = metricName9.group();
 
             $("div[id^='pg" + n + "']").each(function () {
                 var chartId = $(this).attr('id');
