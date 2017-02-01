@@ -71,17 +71,17 @@ and open the template in the editor.
                 <!-- Bottom row, not visible on scroll -->
                 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
                     <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Hiring</a>
-                    <a href="#scroll-tab-2" class="mdl-layout__tab">Demographics</a>
-                    <a href="#scroll-tab-3" class="mdl-layout__tab">Experience</a>
-                    <a href="#scroll-tab-4" class="mdl-layout__tab">Sourcing</a>
+                    <a href="#scroll-tab-2" class="mdl-layout__tab">Onboarding & Engagement</a>
+                    <a href="#scroll-tab-3" class="mdl-layout__tab">Attrition</a>
+                    <!--<a href="#scroll-tab-4" class="mdl-layout__tab">Sourcing</a>-->
                 </div>
             </header>
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">INSTRUCTIONS</span>
-                <span class="mdl-layout-title">Pie Chart</span>
-                <p>Click on the pie to drill down further by Region and/or Circle</p>
-                <span class="mdl-layout-title">Candidate Table</span>
-                <p>Update one/many dropdowns to view the applicants list</p>
+                <!--<span class="mdl-layout-title">Pie Chart</span>-->
+                <p>Click on any chart/dropdown to crossfilter the other charts</p>
+                <!--<span class="mdl-layout-title">Candidate Table</span>-->
+                <!--<p>Update one/many dropdowns to view the applicants list</p>-->
             </div>
             <main class="mdl-layout__content">
                 <%

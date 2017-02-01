@@ -316,13 +316,16 @@ $(document).ready(function () {
     }
 
     function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
-        var width = document.getElementById(chartId).offsetWidth;
+//        var width = document.getElementById(chartId).offsetWidth;
         chart = dc.pieChart("#" + chartId);
         chart
-//                .height(150)
-                .width(width)
+                .height(200)
+                .width(300)
                 .dimension(cfDimension)
                 .group(cfGroup)
+                .externalLabels(10)
+                .externalRadiusPadding(25)
+                .ordinalColors(['#ef5350', '#EC407A', '#AB47BC', '#7E57C2', '#5C6BC0', '#42A5F5', '#26C6DA', '#26A69A', '#66BB6A', '#9CCC65', '#D4E157', '#FFEE58', '#FFCA28', '#FFA726', '#FF7043'])
                 .label(function (d) {
                     return d.key + ": " + d3.round((d.value / d3.sum(cfGroup.all(), function (d) {
                         return d.value;
@@ -334,47 +337,16 @@ $(document).ready(function () {
     }
 
     function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
-        var width = document.getElementById(chartId).offsetWidth;
+//        var width = document.getElementById(chartId).offsetWidth;
         var chart = dc.rowChart("#" + chartId);
         chart
-//                .height(200)
-                .width(width)
+                .height(200)
+                .width(300)
                 .elasticX(true)
                 .dimension(cfDimension)
                 .group(cfGroup)
+                .ordinalColors(['#9FA8DA'])
                 .xAxis().tickFormat(d3.format('.1s'));
-        
-//        chart.on("renderlet.a", function (chart) {
-//            //Check if labels exist
-//            var gLabels = chart.select(".labels");
-//            if (gLabels.empty()) {
-//                gLabels = chart.select(".chart-body").append('g').classed('labels', true);
-//            }
-//
-//            var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
-//
-//            gLabelsData.exit().remove(); //Remove unused elements
-//
-//            gLabelsData.enter().append("text"); //Add new elements
-//
-//            gLabelsData
-//                    .attr('text-anchor', 'middle')
-//                    .attr('fill', 'white')
-//                    .text(function (d) {
-//                        return d3.select(d).data()[0].data.value
-//                    })
-//                    .attr('x', function (d) {
-//                        return +d.getAttribute('x') + (d.getAttribute('width') / 2);
-//                    })
-//                    .attr('y', function (d) {
-//                        return +d.getAttribute('y') + 15;
-//                    })
-//                    .attr('style', function (d) {
-//                        if (+d.getAttribute('height') < 18)
-//                            return "display:none";
-//                    });
-//        });
-        
         chart.render();
     }
 
@@ -404,6 +376,37 @@ $(document).ready(function () {
                 .elasticY(true)
                 .colors(['#303f9f']);
 //                .xAxis().tickFormat(d3.format("%m"));
+
+        chart.on("renderlet", function (chart) {
+            var gLabels = chart.select(".labels");
+            if (gLabels.empty()) {
+                gLabels = chart.select(".chart-body").append('g').classed('labels', true);
+            }
+
+            var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
+
+            gLabelsData.exit().remove(); //Remove unused elements
+
+            gLabelsData.enter().append("text") //Add new elements
+
+            gLabelsData
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', 'white')
+                    .text(function (d) {
+                        return d3.select(d).data()[0].data.value
+                    })
+                    .attr('x', function (d) {
+                        return +d.getAttribute('x') + (d.getAttribute('width') / 2);
+                    })
+                    .attr('y', function (d) {
+                        return +d.getAttribute('y') + 15;
+                    })
+                    .attr('style', function (d) {
+                        if (+d.getAttribute('height') < 18)
+                            return "display:none";
+                    });
+        });
+
         chart.render();
     }
 

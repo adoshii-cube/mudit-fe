@@ -1068,6 +1068,10 @@ div .mdl-textfield__label:after {
     margin: 0 auto;
 }
 
+.chart-body text{
+    font-size: 12px;
+}
+
 select {
     font-family: inherit;
     background-color: transparent;

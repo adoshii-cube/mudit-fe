@@ -27,7 +27,7 @@ div.dc-chart {
 }
 
 .dc-chart .pie-slice {
-    fill: white;
+    fill: #000000;
     font-size: 12px;
     cursor: pointer;
 }
@@ -55,7 +55,8 @@ div.dc-chart {
 }
 
 .dc-chart .axis text {
-    font: 10px sans-serif;
+    font-size: 10px;
+    font-family: 'Roboto', 'sans-serif';
 }
 
 .dc-chart .grid-line {
