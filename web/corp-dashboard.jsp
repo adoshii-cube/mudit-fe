@@ -131,7 +131,7 @@ and open the template in the editor.
                                                 List<Metric> rawData = ch.getChartDataForPage(questionNum);
                                                 JSONArray rawDataInJSON = new JSONArray(rawData);
                                                 String rawDataJSONArray = rawDataInJSON.toString();
-                                                System.out.println("rawDataJSONArray ::::::::::: "+rawDataJSONArray);
+
                                                 List<Chart> chartList = ch.getChartMapping(questionNum);
 
                                                 for (int j = 0; j < chartList.size(); j++) {

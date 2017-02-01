@@ -319,12 +319,16 @@ $(document).ready(function () {
         var width = document.getElementById(chartId).offsetWidth;
         chart = dc.pieChart("#" + chartId);
         chart
-                .height(200)
+//                .height(150)
                 .width(width)
                 .dimension(cfDimension)
-//            .margins({top: 10, right: 50, bottom: 30, left: 50})
                 .group(cfGroup)
-                .legend(dc.legend().x(175).horizontal(false));
+                .label(function (d) {
+                    return d.key + ": " + d3.round((d.value / d3.sum(cfGroup.all(), function (d) {
+                        return d.value;
+                    })) * 100, 1) + "%";
+                });
+//                .legend(dc.legend().x(175).horizontal(false));
 //        chart.filter = function () {};
         chart.render();
     }
@@ -333,15 +337,44 @@ $(document).ready(function () {
         var width = document.getElementById(chartId).offsetWidth;
         var chart = dc.rowChart("#" + chartId);
         chart
-                .height(200)
+//                .height(200)
                 .width(width)
+                .elasticX(true)
                 .dimension(cfDimension)
                 .group(cfGroup)
-//                .centerBar(true)
-                .legend(dc.legend());
-//        chart.filter = function () {};
-//            .elasticX(true)
-//            .controlsUseVisibility(true);
+                .xAxis().tickFormat(d3.format('.1s'));
+        
+//        chart.on("renderlet.a", function (chart) {
+//            //Check if labels exist
+//            var gLabels = chart.select(".labels");
+//            if (gLabels.empty()) {
+//                gLabels = chart.select(".chart-body").append('g').classed('labels', true);
+//            }
+//
+//            var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
+//
+//            gLabelsData.exit().remove(); //Remove unused elements
+//
+//            gLabelsData.enter().append("text"); //Add new elements
+//
+//            gLabelsData
+//                    .attr('text-anchor', 'middle')
+//                    .attr('fill', 'white')
+//                    .text(function (d) {
+//                        return d3.select(d).data()[0].data.value
+//                    })
+//                    .attr('x', function (d) {
+//                        return +d.getAttribute('x') + (d.getAttribute('width') / 2);
+//                    })
+//                    .attr('y', function (d) {
+//                        return +d.getAttribute('y') + 15;
+//                    })
+//                    .attr('style', function (d) {
+//                        if (+d.getAttribute('height') < 18)
+//                            return "display:none";
+//                    });
+//        });
+        
         chart.render();
     }
 
@@ -360,24 +393,18 @@ $(document).ready(function () {
     function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
 
         var chart = dc.barChart("#" + chartId);
-
         chart
                 .height(75)
                 .width(900)
-                .x(d3.scale.ordinal()) // Need empty val to offset first value
+                .x(d3.scale.ordinal())
                 .xUnits(dc.units.ordinal)
-//                .x(d3.time.scale().domain([minDate, maxDate]))
-//                .xUnits(d3.time.months)
                 .dimension(cfDimension)
                 .group(cfGroup)
-//                .renderHorizontalGridLines(true)
-//                .renderVerticalGridLines(true)
-//                .mouseZoomable(true)
                 .showYAxis(false)
                 .elasticY(true)
-//                .controlsUseVisibility(true)
-                .colors(['#303f9f'])
-                .render();
+                .colors(['#303f9f']);
+//                .xAxis().tickFormat(d3.format("%m"));
+        chart.render();
     }
 
     $(".mdl-textfield__input").blur(function () {

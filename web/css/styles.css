@@ -1029,6 +1029,9 @@ div .mdl-textfield__label:after {
 }
 
 /*AXIS DASHBOARD*/
+/*.dc-chart{
+    font-family: 'Roboto', 'sans-serif';
+}*/
 .mdl-chart__map{
     /*height: 50vh;*/
     /*width: 100vw;*/
@@ -1043,12 +1046,12 @@ div .mdl-textfield__label:after {
 }
 
 .mdl-chart__timeseries{
-    min-height: 100px;
+    min-height: 75px;
 }
 
 .mdl-chart__dropdown{
-    min-height: 100px !important;
-    max-height: 100px !important;
+    min-height: 75px !important;
+    max-height: 75px !important;
 }
 
 .mdl-selectfield{
@@ -1057,7 +1060,7 @@ div .mdl-textfield__label:after {
 }
 
 .mdl-chart__bar svg{
-    width:80%;
+    /*width:80%;*/
 }
 .mdl-chart__map svg,
 .mdl-chart__pie svg{
