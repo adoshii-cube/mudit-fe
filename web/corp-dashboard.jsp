@@ -171,6 +171,15 @@ and open the template in the editor.
                     </div>
                 </section>
                 <%}%>
+                <footer class="mdl-mini-footer">
+                    <div class="mdl-mini-footer__left-section">
+                        <div class="mdl-logo">© 2017 i-Cube Analytics & Data Services - All rights reserved.</div>
+                        <!--<ul class="mdl-mini-footer__link-list">-->
+                        <!--<li><a href="#">Help</a></li>-->
+                        <!--<li><a href="#">Privacy & Terms</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                </footer>
             </main>
         </div>
         <script src="js/material.min.js"></script>

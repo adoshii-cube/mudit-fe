@@ -57,12 +57,13 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#303f9f">
     </head>
     <body>
-
         <div class="mdl-layout mdl-js-layout">
             <header class="mdl-layout__header mdl-layout__header--scroll">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
-                    <span class="mdl-layout-title">Title</span>
+                    <span class="mdl-layout-title">
+                        <img class="android-logo-image" src="images/OWEN_Logo_white.png" alt="OWEN Logo">
+                    </span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
