@@ -3,6 +3,7 @@
 <%@page import="org.icube.metric.Metric"%>
 <%@page import="org.icube.chart.Chart"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="org.icube.chart.ChartHelper"%>
 <!DOCTYPE html>
 <!--
@@ -85,8 +86,9 @@ and open the template in the editor.
             </div>
             <main class="mdl-layout__content">
                 <%
-                    int totalTabs = 4;
-                    for (int tabNumber = 1; tabNumber <= totalTabs; tabNumber++) {%>
+                    int totalTabs = 3;
+                    int tabNumber = 1;
+//                    for (int tabNumber = 1; tabNumber <= totalTabs; tabNumber++) {%>
                 <section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">
                     <div class="page-content">
                         <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -96,13 +98,16 @@ and open the template in the editor.
                                         <%
                                             ChartHelper ch = new ChartHelper();
                                             List<Question> questionList = ch.getQuestionForTab(tabNumber);
+                                            List<Integer> questionIdList = new ArrayList<>();
                                             for (int i = 0; i < questionList.size(); i++) {
+//                                            for (int i = 0; i < questionList.size(); i++) {
                                                 Question q = questionList.get(i);
-                                                String question = q.getQuestion();
-                                                int questionNum = q.getPageId();
+                                                String question = q.getQuestionText();
+                                                int questionId = q.getPageId();
+                                                questionIdList.add(q.getPageId());
                                         %>
 
-                                        <a href="#tab<%=questionNum%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionNum%>">
+                                        <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
                                             <!--<span class="hollow-circle"></span>-->
                                             <div>
                                                 <%=question%>
@@ -115,24 +120,34 @@ and open the template in the editor.
 
                                 <div class="mdl-cell mdl-cell--9-col">
                                     <%
-                                        //ChartHelper ch1 = new ChartHelper();
-                                        List<Question> questionList1 = ch.getQuestionForTab(tabNumber);
-                                        for (int i = 0; i < questionList1.size(); i++) {
-                                            Question q = questionList1.get(i);
-                                            int questionNum = q.getPageId();
+                                        JSONArray qIdList = new JSONArray(questionIdList);
+                                        System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
+                                        String jArrayQIdList = qIdList.toString();
+                                        System.out.println("jArrayQIdList :::::::::::::::::::::: " + jArrayQIdList);
+//                                        int totalQuestion = questionList.size();
+                                        for (int i = 0; i < questionList.size(); i++) {
+//                                            for (int i = 0; i < questionList.size(); i++) {
+                                            Question q = questionList.get(i);
+                                            int questionId = q.getPageId();
 
 
                                     %>
-                                    <div class="mdl-tabs__panel" id="tab<%=questionNum%>-panel"> 
+                                    <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
 
                                         <div class="android-card-container mdl-grid">
                                             <%
+                                                List<?> rawData = null;
+                                                System.out.println("questionId :::::::::::::::::::::: " + questionId);
+                                                if (questionId == 3) {
+                                                    System.out.println("questionId :::::::::::::::::::::: " + questionId);
+                                                    rawData = ch.getChartDataForTat();
+                                                } else {
+                                                    rawData = ch.getChartDataForPage(questionId);
+                                                }
 
-                                                List<Metric> rawData = ch.getChartDataForPage(questionNum);
                                                 JSONArray rawDataInJSON = new JSONArray(rawData);
                                                 String rawDataJSONArray = rawDataInJSON.toString();
-
-                                                List<Chart> chartList = ch.getChartMapping(questionNum);
+                                                List<Chart> chartList = ch.getChartMapping(questionId);
 
                                                 for (int j = 0; j < chartList.size(); j++) {
                                                     Chart chart = chartList.get(j);
@@ -150,27 +165,30 @@ and open the template in the editor.
                                                         className = "mdl-chart__timeseries mdl-cell--12-col";
                                                     }
                                             %>
-                                            <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionNum%>_chart<%=chart.getChartId()%>">
+                                            <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionId%>_chart<%=chart.getChartId()%>">
                                                 <div class="mdl-card__title">
                                                     <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
                                                 </div>
                                                 <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
                                                 <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
-                                                <input type="hidden" id="pageNumber" value='<%=questionNum%>'/>
-                                                <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
+                                                <input type="hidden" id="questionId" value='<%=questionId%>'/>
+                                                <input type="hidden" id="totalTabs" value='<%=totalTabs%>'/>
                                             </div>
                                             <%}%>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="rawData<%=questionNum%>" value='<%=rawDataJSONArray%>'/>  
-                                    <%}%> 
+                                    <% System.out.println("Saving data for tab " + tabNumber + " and question " + questionId);%>
+                                    <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
+                                    <%}%>
+                                    <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
                                 </div>
                             </div>
                         </div>
 
                     </div>
+
                 </section>
-                <%}%>
+                <% //}%>
                 <footer class="mdl-mini-footer">
                     <div class="mdl-mini-footer__left-section">
                         <div class="mdl-logo">© 2017 i-Cube Analytics & Data Services - All rights reserved.</div>
