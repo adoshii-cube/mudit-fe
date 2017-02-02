@@ -103,37 +103,46 @@ $(document).ready(function () {
                         }
                 );
 
+                var tatMetricName5 = cf.dimension(function (d) {
+                    return d["subType"];
+                });
+//                tatMetricName5.filter("tat_count");
 
-
-//                var tatMetricNameGroup5 = tatMetricName5.group().reduce(
-//                        function (p, v) {
-//                            if (isTATSum(v)) {
-//                                p.numerator += +v.value;
-//                            }
-//                            if (isTATCount(v)) {
-//                                p.denominator += +v.value;
-//                            }
-//                            p.avg = d3.round((p.numerator / p.denominator), 2);
-//                            return p;
-//                        },
-//                        function (p, v) {
-//                            if (isTATSum(v)) {
-//                                p.numerator -= +v.value;
-//                            }
-//                            if (isTATCount(v)) {
-//                                p.denominator -= +v.value;
-//                            }
-//                            p.avg = d3.round((p.numerator / p.denominator), 2);
-//                            return p;
-//                        },
-//                        function () {
-//                            return{
-//                                denominator: 0,
-//                                numerator: 0,
-//                                avg: 0
-//                            };
-//                        }
-//                );
+                var tatMetricNameGroup5 = tatMetricName5.group().reduce(
+                        function (p, v) {
+                            if (isTATSum(v)) {
+                                p.numerator += +v.value;
+                                p.type = v.type;
+                            }
+                            if (isTATCount(v)) {
+                                p.denominator += +v.value;
+                                p.type = v.type;
+                            }
+                            p.avg = d3.round((p.numerator / p.denominator), 2);
+                            return p;
+//                            console.log("p ::::::::::::::::::::" + p);
+                        },
+                        function (p, v) {
+                            if (isTATSum(v)) {
+                                p.numerator -= +v.value;
+                                p.type = v.type;
+                            }
+                            if (isTATCount(v)) {
+                                p.denominator -= +v.value;
+                                p.type = v.type;
+                            }
+                            p.avg = d3.round((p.numerator / p.denominator), 2);
+                            return p;
+                        },
+                        function () {
+                            return{
+                                denominator: 0,
+                                numerator: 0,
+                                avg: 0,
+                                type: ""
+                            };
+                        }
+                );
             } else {
                 var cf = crossfilter(data);
                 var metricName1 = cf.dimension(function (d) {
@@ -301,8 +310,7 @@ $(document).ready(function () {
                             createTimeseriesUsingDc(chartId, tatMetricName4, tatMetricNameGroup4);
                             break;
                         case "5":
-                            createRowChartTATUsingDC(chartId);
-//                            createBarChartTATUsingDc(chartId, tatMetricName5, tatMetricNameGroup5);
+                            createBarChartTATUsingDc(chartId, tatMetricName5, tatMetricNameGroup5);
                             break;
 //        case "6":
 //            createBarChartTATUsingDc(chartId, metricName6, metricNameGroup6);
@@ -480,6 +488,7 @@ function isTATCount(v) {
     return v.type === "tat_count";
 }
 function isTATSum(v) {
+//    console.log("isTatSum :::::::::::" + v.type === "tat_sum");
     return v.type === "tat_sum";
 }
 
@@ -616,7 +625,7 @@ function createBarChartTATUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.rowChart("#" + chartId);
     chart
             .height(200)
-            .width(250)
+            .width(300)
 //            .x(d3.scale.ordinal())
 //            .xUnits(dc.units.ordinal)
             .valueAccessor(function (p) {
@@ -624,37 +633,12 @@ function createBarChartTATUsingDc(chartId, cfDimension, cfGroup) {
             })
             .dimension(cfDimension)
             .group(cfGroup)
-//            .showYAxis(false)
-//            .elasticY(true)
-            .colors(['#303f9f']);
+            .elasticX(true)
+            .ordinalColors(['#303f9f']);
     chart.filter = function () {};
     chart.render();
 }
 
-function createRowChartTATUsingDC(chartId) {
-    var chart = dc.barChart("#" + chartId);
-
-    d3.csv("TATData.csv", function (error, data) {
-        var cfTAT = crossfilter(data);
-        var cfDimension = cfTAT.dimension(function (d) {
-            return d.sub_type;
-        });
-
-        var cfGroup = cfDimension.group();
-        chart
-                .height(200)
-                .width(900)
-                .elasticX(true)
-                .x(d3.scale.ordinal())
-                .xUnits(dc.units.ordinal)
-                .dimension(cfDimension)
-                .group(cfGroup);
-        chart.filter = function () {};
-        chart.render();
-    });
-
-
-}
 function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
     var width = document.getElementById(chartId).offsetWidth;
     var chart = dc.selectMenu("#" + chartId);
