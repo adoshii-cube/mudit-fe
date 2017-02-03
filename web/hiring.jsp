@@ -95,7 +95,7 @@
                     <div class="page-content">
                         <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                             <div class="mdl-grid mdl-grid--no-spacing">
-                                <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+                                <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-phone">
                                     <div class="mdl-tabs__tab-bar">
                                         <%
                                             ChartHelper ch = new ChartHelper();
@@ -119,7 +119,7 @@
 
                                 </div>
 
-                                <div class="mdl-cell mdl-cell--9-col">
+                                <div class="mdl-cell mdl-cell--10-col">
                                     <%
                                         JSONArray qIdList = new JSONArray(questionIdList);
                                         System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
@@ -143,6 +143,10 @@
                                                 if (questionId == 3) {
                                                     System.out.println("questionId :::::::::::::::::::::: " + questionId);
                                                     rawData = ch.getChartDataForTat();
+                                                }
+                                                else if (questionId == 4) {
+                                                    System.out.println("questionId :::::::::::::::::::::: " + questionId);
+                                                    rawData = ch.getChartDataForSourceOfHire();
                                                 } else {
                                                     rawData = ch.getChartDataForPage(questionId);
                                                 }

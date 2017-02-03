@@ -1040,8 +1040,8 @@ div .mdl-textfield__label:after {
     /*height: 40vh;*/
 }
 
-.mdl-chart__bar{
-    /*height: 40vh;*/
+.mdl-chart__bar svg{
+    margin: 0 auto;
 }
 
 .mdl-chart__timeseries{
@@ -1132,7 +1132,7 @@ select:focus {
     /*padding-bottom: 35px;*/
     height: inherit;
     border-bottom: none;
-    border-right: 1px solid rgba(10, 11, 49, 0.20);
+    /*border-right: 1px solid rgba(10, 11, 49, 0.20);*/
 }
 
 .vertical-mdl-tabs .mdl-tabs__tab {
@@ -1144,8 +1144,14 @@ select:focus {
 }
 
 .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
-    border-right: 2px solid #ED462F;
+    /*border: 2px solid #ED462F;*/
     font-weight: 600;
+    background: #FF6E40;
+    color: white;
+    border-right: none;
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
+    border-top-right-radius: 5em;
+    border-bottom-right-radius: 5em;
 }
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
     content: inherit;
@@ -1161,7 +1167,7 @@ select:focus {
     overflow: visible;
     text-transform: inherit;
     font-weight: 500;
-    height: 8em;
+    height: 5em;
     line-height: inherit;
     display: table;
 }

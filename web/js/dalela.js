@@ -137,7 +137,7 @@ $(document).ready(function () {
                         if (isConvDenominator(v)) {
                             p.denominator += +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator*100), 2);
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
                         return p;
 //                            console.log("p ::::::::::::::::::::" + p);
                     },
@@ -148,7 +148,7 @@ $(document).ready(function () {
                         if (isConvDenominator(v)) {
                             p.denominator -= +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator*100), 2);
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
                         return p;
                     },
                     function () {
@@ -160,6 +160,212 @@ $(document).ready(function () {
                     }
             );
 
+
+        } else if (quesId === 4) {
+            var cf = crossfilter(data);
+            var sohMetricName1 = cf.dimension(function (d) {
+                return d["metricName1"];
+            });
+            var sohMetricNameGroup1 = sohMetricName1.group().reduce(
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p += +v.value;
+                        }
+                        return p;
+                    },
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p -= +v.value;
+                        }
+                        return p;
+                    },
+                    function () {
+                        return 0;
+                    }
+            );
+            var sohMetricName2 = cf.dimension(function (d) {
+                return d["metricName2"];
+            });
+            var sohMetricNameGroup2 = sohMetricName2.group().reduce(
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p += +v.value;
+                        }
+                        return p;
+                    },
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p -= +v.value;
+                        }
+                        return p;
+                    },
+                    function () {
+                        return 0;
+                    }
+            );
+            var sohMetricName3 = cf.dimension(function (d) {
+                return d["metricName3"];
+            });
+            var sohMetricNameGroup3 = sohMetricName3.group().reduce(
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p += +v.value;
+                        }
+                        return p;
+                    },
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p -= +v.value;
+                        }
+                        return p;
+                    },
+                    function () {
+                        return 0;
+                    }
+            );
+            var sohMetricName4 = cf.dimension(function (d) {
+                return d["metricName4"];
+            });
+            var sohMetricNameGroup4 = sohMetricName4.group().reduce(
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p += +v.value;
+                        }
+                        return p;
+                    },
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p -= +v.value;
+                        }
+                        return p;
+                    },
+                    function () {
+                        return 0;
+                    }
+            );
+
+            var sohMetricName5 = cf.dimension(function (d) {
+                return d["metricName3"];
+            });
+            var sohMetricNameGroup5 = sohMetricName5.group().reduce(
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p += +v.value;
+                        }
+                        return p;
+                    },
+                    function (p, v) {
+                        if (isCandidateCount(v)) {
+                            p -= +v.value;
+                        }
+                        return p;
+                    },
+                    function () {
+                        return 0;
+                    }
+            );
+
+            var sohMetricName6 = cf.dimension(function (d) {
+                return d["metricName3"];
+            });
+            var sohMetricNameGroup6 = sohMetricName6.group().reduce(
+                    function (p, v) {
+                        if (isConvNumerator(v)) {
+                            p.numerator += +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator += +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
+                        return p;
+//                            console.log("p ::::::::::::::::::::" + p);
+                    },
+                    function (p, v) {
+                        if (isConvNumerator(v)) {
+                            p.numerator -= +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator -= +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
+                        return p;
+                    },
+                    function () {
+                        return{
+                            denominator: 0,
+                            numerator: 0,
+                            avg: 0
+                        };
+                    }
+            );
+
+            var sohMetricName7 = cf.dimension(function (d) {
+                return d["metricName3"];
+            });
+            var sohMetricNameGroup7 = sohMetricName7.group().reduce(
+                    function (p, v) {
+                        if (isTATSum(v)) {
+                            p.numerator += +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator += +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        return p;
+//                            console.log("p ::::::::::::::::::::" + p);
+                    },
+                    function (p, v) {
+                        if (isTATSum(v)) {
+                            p.numerator -= +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator -= +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        return p;
+                    },
+                    function () {
+                        return{
+                            denominator: 0,
+                            numerator: 0,
+                            avg: 0
+                        };
+                    }
+            );
+
+            var sohMetricName8 = cf.dimension(function (d) {
+                return d["metricName3"];
+            });
+            var sohMetricNameGroup8 = sohMetricName8.group().reduce(
+                    function (p, v) {
+                        if (isCompensationSum(v)) {
+                            p.numerator += +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator += +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        return p;
+//                            console.log("p ::::::::::::::::::::" + p);
+                    },
+                    function (p, v) {
+                        if (isCompensationSum(v)) {
+                            p.numerator -= +v.value;
+                        }
+                        if (isCandidateCount(v)) {
+                            p.denominator -= +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        return p;
+                    },
+                    function () {
+                        return{
+                            denominator: 0,
+                            numerator: 0,
+                            avg: 0
+                        };
+                    }
+            );
 
         } else {
             var cf = crossfilter(data);
@@ -332,6 +538,33 @@ $(document).ready(function () {
                         break;
                     case "6":
                         createRowChartTATUsingDc(chartId, tatMetricName6, tatMetricNameGroup6);
+                        break;
+                }
+            } else if (quesId === 4) {
+                switch (chartMetricId) {
+                    case "1":
+                        createDropdownUsingDc(chartId, sohMetricName1, sohMetricNameGroup1);
+                        break;
+                    case "2":
+                        createDropdownUsingDc(chartId, sohMetricName2, sohMetricNameGroup2);
+                        break;
+                    case "3":
+                        createDropdownUsingDc(chartId, sohMetricName3, sohMetricNameGroup3);
+                        break;
+                    case "4":
+                        createTimeseriesUsingDc(chartId, sohMetricName4, sohMetricNameGroup4);
+                        break;
+                    case "5":
+                        createRowChartUsingDc(chartId, sohMetricName5, sohMetricNameGroup5);
+                        break;
+                    case "6":
+                        createRowChartTATUsingDc(chartId, sohMetricName6, sohMetricNameGroup6);
+                        break;
+                    case "7":
+                        createRowChartTATUsingDc(chartId, sohMetricName7, sohMetricNameGroup7);
+                        break;
+                    case "8":
+                        createRowChartTATUsingDc(chartId, sohMetricName8, sohMetricNameGroup8);
                         break;
                 }
             } else {
@@ -511,6 +744,9 @@ function isConvNumerator(v) {
 function isConvDenominator(v) {
     return v.type === "conversion_ratio_deno";
 }
+function isCompensationSum(v) {
+    return v.type === "compensation_sum";
+}
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
 //        var width = document.getElementById(chartId).offsetWidth;
@@ -538,11 +774,17 @@ function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.rowChart("#" + chartId);
     chart
             .height(200)
-            .width(300)
+            .width(350)
             .elasticX(true)
             .dimension(cfDimension)
             .group(cfGroup)
             .ordinalColors(['#7986CB'])
+            .label(function (d) {
+                return d.key + " = " + d.value;
+            })
+//            .ordering(function (d) {
+//                return -d.value;
+//            })
             .xAxis().tickFormat(d3.format('.1s'));
     chart.render();
 }
@@ -551,7 +793,7 @@ function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.rowChart("#" + chartId);
     chart
             .height(200)
-            .width(300)
+            .width(350)
 //            .x(d3.scale.ordinal())
 //            .xUnits(dc.units.ordinal)
             .valueAccessor(function (p) {
@@ -560,6 +802,9 @@ function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
             .dimension(cfDimension)
             .group(cfGroup)
             .elasticX(true)
+//            .label(function (d) {
+//                return d.key + " = " + d.value.avg;
+//            })
             .ordinalColors(['#7986CB']);
     chart.filter = function () {};
     chart.render();
@@ -582,7 +827,7 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.barChart("#" + chartId);
     chart
             .height(75)
-            .width(900)
+            .width(1100)
             .x(d3.scale.ordinal())
             .xUnits(dc.units.ordinal)
             .dimension(cfDimension)
