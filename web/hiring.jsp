@@ -135,7 +135,7 @@
                                     %>
                                     <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
 
-                                        <div class="android-card-container mdl-grid">
+                                        <div class="android-card-container">
                                             <%
 
                                                 List<?> rawData = null;

@@ -1048,6 +1048,10 @@ div .mdl-textfield__label:after {
     min-height: 75px;
 }
 
+.mdl-chart__timeseries svg{
+    margin:  auto;
+}
+
 .mdl-chart__dropdown{
     min-height: 75px !important;
     max-height: 75px !important;
@@ -1119,7 +1123,7 @@ select:focus {
 
 
 .vertical-mdl-tabs {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .vertical-mdl-tabs .mdl-tabs__tab-bar {
     -webkit-flex-direction: column;
@@ -1149,7 +1153,7 @@ select:focus {
 }
 
 .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__panel.is-active, .mdl-tabs__panel {
-    padding: 0 30px;
+    padding: 0 8px;
 }
 
 .vertical-mdl-tabs.mdl-tabs .mdl-tabs__tab {
