@@ -374,11 +374,11 @@ $(document).ready(function () {
             });
             var metricNameGroup1 = metricName1.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -390,11 +390,11 @@ $(document).ready(function () {
             });
             var metricNameGroup2 = metricName2.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -406,11 +406,11 @@ $(document).ready(function () {
             });
             var metricNameGroup3 = metricName3.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -422,11 +422,11 @@ $(document).ready(function () {
             });
             var metricNameGroup4 = metricName4.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -438,11 +438,11 @@ $(document).ready(function () {
             });
             var metricNameGroup5 = metricName5.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -454,11 +454,11 @@ $(document).ready(function () {
             });
             var metricNameGroup6 = metricName6.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -470,11 +470,11 @@ $(document).ready(function () {
             });
             var metricNameGroup7 = metricName7.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -486,11 +486,11 @@ $(document).ready(function () {
             });
             var metricNameGroup8 = metricName8.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -502,11 +502,11 @@ $(document).ready(function () {
             });
             var metricNameGroup9 = metricName9.group().reduce(
                     function (p, v) {
-                        p += +v.candidateCount;
+                        p += +v.value;
                         return p;
                     },
                     function (p, v) {
-                        p -= +v.candidateCount;
+                        p -= +v.value;
                         return p;
                     },
                     function () {
@@ -730,7 +730,7 @@ $(document).ready(function () {
 });
 
 function isCandidateCount(v) {
-    return v.type === "Candidate_count";
+    return v.type === "candidate_count";
 }
 function isTATCount(v) {
     return v.type === "tat_count";
@@ -834,6 +834,12 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
             .group(cfGroup)
             .showYAxis(false)
             .elasticY(true)
+            .on("postRender", function (chart) {
+                chart.select("svg")
+                        .attr("width", "100%")
+                        .attr("height", "100%");
+                chart.redraw();
+            })
             .colors(['#303f9f']);
 //                .xAxis().tickFormat(d3.format("%m"));
 

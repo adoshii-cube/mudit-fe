@@ -124,36 +124,15 @@
                                         JSONArray qIdList = new JSONArray(questionIdList);
                                         System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
                                         String jArrayQIdList = qIdList.toString();
-                                        System.out.println("jArrayQIdList :::::::::::::::::::::: " + jArrayQIdList);
-                                        //ChartHelper ch1 = new ChartHelper();
-                                        
                                         for (int i = 0; i < questionList.size(); i++) {
                                             Question q = questionList.get(i);
                                             int questionId = q.getPageId();
-
-
                                     %>
                                     <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
 
                                         <div class="android-card-container">
                                             <%
-
-                                                List<?> rawData = null;
-                                                System.out.println("questionId :::::::::::::::::::::: " + questionId);
-                                                if (questionId == 3) {
-                                                    System.out.println("questionId :::::::::::::::::::::: " + questionId);
-                                                    rawData = ch.getChartDataForTat();
-                                                }
-                                                else if (questionId == 4) {
-                                                    System.out.println("questionId :::::::::::::::::::::: " + questionId);
-                                                    rawData = ch.getChartDataForSourceOfHire();
-                                                } else {
-                                                    rawData = ch.getChartDataForPage(questionId);
-                                                }
-                                                
-                                                
-                                                
-//                                                List<Metric> rawData = ch.getChartDataForPage(questionNum);
+                                                List<Metric> rawData =  ch.getChartDataForPage(questionId);
                                                 JSONArray rawDataInJSON = new JSONArray(rawData);
                                                 String rawDataJSONArray = rawDataInJSON.toString();
                                                 List<Chart> chartList = ch.getChartMapping(questionId);
