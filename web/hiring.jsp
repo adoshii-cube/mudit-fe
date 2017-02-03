@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="org.icube.question.Question"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.icube.metric.Metric"%>
@@ -45,7 +46,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/dc.css"/>
-        <link rel="stylesheet" type="text/css" href="css/slidebars.css"/>
 
         <link rel='shortcut icon' type='image/x-icon' href='images/OWEN_Favicon.ico'/>
 
@@ -56,8 +56,9 @@
         <!-- iOS Safari -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="#303f9f">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     </head>
-    <body>
+    <body id="hiring_dashboard">
         <div class="mdl-layout mdl-js-layout">
             <header class="mdl-layout__header mdl-layout__header--scroll">
                 <div class="mdl-layout__header-row">
@@ -69,10 +70,10 @@
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="">Hiring</a>
+                        <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
+                        <a class="mdl-navigation__link" href="">Attrition</a>
+                        <a class="mdl-navigation__link" href="index.jsp">Logout</a>
                     </nav>
                 </div>
             </header>
@@ -86,96 +87,129 @@
                 </nav>
             </div>
             <main class="mdl-layout__content">
-                <div class="page-content">
-                    <div canvas="container">
+                <%
+                    int totalTabs = 1;
+                    int tabNumber = 1;
+                %>
+                <!--<section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">-->
+                    <div class="page-content">
+                        <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                            <div class="mdl-grid mdl-grid--no-spacing">
+                                <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+                                    <div class="mdl-tabs__tab-bar">
+                                        <%
+                                            ChartHelper ch = new ChartHelper();
+                                            List<Question> questionList = ch.getQuestionForTab(tabNumber);
+                                            List<Integer> questionIdList = new ArrayList<>();
+                                            for (int i = 0; i < questionList.size(); i++) {
+                                                Question q = questionList.get(i);
+                                                String question = q.getQuestionText();
+                                                int questionId = q.getPageId();
+                                                questionIdList.add(q.getPageId());
+                                        %>
 
-                        <p>You'd need to open the console to view the results of some of these tests.</p>
+                                        <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
+                                            <!--<span class="hollow-circle"></span>-->
+                                            <div>
+                                                <%=question%>
+                                            </div>
+                                        </a>
+                                        <%}%>   
+                                    </div>
 
-                        <h4>Left Slidebar Controls</h4>
+                                </div>
 
-                            <button class="js-toggle-left-slidebar">Toggle left Slidebar</button>
-                        
+                                <div class="mdl-cell mdl-cell--9-col">
+                                    <%
+                                        JSONArray qIdList = new JSONArray(questionIdList);
+                                        System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
+                                        String jArrayQIdList = qIdList.toString();
+                                        System.out.println("jArrayQIdList :::::::::::::::::::::: " + jArrayQIdList);
+                                        //ChartHelper ch1 = new ChartHelper();
+                                        
+                                        for (int i = 0; i < questionList.size(); i++) {
+                                            Question q = questionList.get(i);
+                                            int questionId = q.getPageId();
 
-                        <h4>Right Slidebar Controls</h4>
 
-                        <p>
-                            <button class="js-open-right-slidebar">Open right Slidebar</button>
-                            <button class="js-close-right-slidebar">Close right Slidebar</button>
-                            <button class="js-toggle-right-slidebar">Toggle right Slidebar</button>
-                        </p>
+                                    %>
+                                    <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
 
-                        <h4>Top Slidebar Controls</h4>
+                                        <div class="android-card-container mdl-grid">
+                                            <%
 
-                        <p>
-                            <button class="js-open-top-slidebar">Open top Slidebar</button>
-                            <button class="js-close-top-slidebar">Close top Slidebar</button>
-                            <button class="js-toggle-top-slidebar">Toggle top Slidebar</button>
-                        </p>
+                                                List<?> rawData = null;
+                                                System.out.println("questionId :::::::::::::::::::::: " + questionId);
+                                                if (questionId == 3) {
+                                                    System.out.println("questionId :::::::::::::::::::::: " + questionId);
+                                                    rawData = ch.getChartDataForTat();
+                                                } else {
+                                                    rawData = ch.getChartDataForPage(questionId);
+                                                }
+                                                
+                                                
+                                                
+//                                                List<Metric> rawData = ch.getChartDataForPage(questionNum);
+                                                JSONArray rawDataInJSON = new JSONArray(rawData);
+                                                String rawDataJSONArray = rawDataInJSON.toString();
+                                                List<Chart> chartList = ch.getChartMapping(questionId);
 
-                        <h4>Bottom Slidebar Controls</h4>
+                                                for (int j = 0; j < chartList.size(); j++) {
+                                                    Chart chart = chartList.get(j);
+                                                    String chartType = chart.getChartType();
+                                                    String className = "";
+                                                    if (chartType.equals("Map")) {
+                                                        className = "mdl-chart__map mdl-cell--4-col";
+                                                    } else if (chartType.equals("Pie")) {
+                                                        className = "mdl-chart__pie mdl-cell--4-col";
+                                                    } else if (chartType.equals("Bar")) {
+                                                        className = "mdl-chart__bar mdl-cell--4-col";
+                                                    } else if (chartType.equals("Dropdown")) {
+                                                        className = "mdl-chart__dropdown mdl-cell--4-col";
+                                                    } else if (chartType.equals("Timeseries")) {
+                                                        className = "mdl-chart__timeseries mdl-cell--12-col";
+                                                    }
+                                            %>
+                                            <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionId%>_chart<%=chart.getChartId()%>">
+                                                <div class="mdl-card__title">
+                                                    <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
+                                                </div>
+                                                <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
+                                                <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
+                                                <input type="hidden" id="pageNumber" value='<%=questionId%>'/>
+                                                <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
+                                            </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
+                                    <%}%> 
+                                    <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
+                                </div>
+                            </div>
+                        </div>
 
-                        <p>
-                            <button class="js-open-bottom-slidebar">Open bottom Slidebar</button>
-                            <button class="js-close-bottom-slidebar">Close bottom Slidebar</button>
-                            <button class="js-toggle-bottom-slidebar">Toggle bottom Slidebar</button>
-                        </p>
-
-                        <h4>Other Controls</h4>
-
-                        <p>
-                            <button class="js-close-any-slidebar">Close any Slidebar</button>
-                        </p>
-
-                        <h4>Initialization, Exit and CSS Reset</h4>
-
-                        <p>
-                            <button class="js-initialize-slidebars">Initialize Slidebars</button>
-                            <button class="js-exit-slidebars">Exit Slidebars</button>
-                            <button class="js-reset-slidebars-css">Reset Slidebars CSS</button>
-                        </p>
-
-                        <h4>Is and Get</h4>
-
-                        <p>
-                            <button class="js-is-active">Is Slidebars active?</button>
-                            <button class="js-is-active-slidebar">Is Slidebar with id active?</button>
-                            <button class="js-get-active-slidebar">Get id of active Slidebar</button>
-                            <button class="js-get-all-slidebars">Get all Slidebar id's</button>
-                            <button class="js-get-slidebar">Get Slidebar by id</button>
-                        </p>
-
-                        <h4>Callbacks</h4>
-
-                        <p>
-                            <button class="js-init-callback">Init callback</button>
-                            <button class="js-exit-callback">Exit callback</button>
-                            <button class="js-css-callback">CSS callback</button>
-                            <button class="js-open-callback">Open callback</button>
-                            <button class="js-close-callback">Close callback</button>
-                            <button class="js-toggle-callback">Toggle callback</button>
-                        </p>
                     </div>
-
-                    <div off-canvas="slidebar-1 left reveal">
-                        <p>Slidebar with id 'slidebar-1' on the left side and reveal style.</p>
+                <!--</section>-->
+                <footer class="mdl-mini-footer">
+                    <div class="mdl-mini-footer__left-section">
+                        <div class="mdl-logo">© 2017 i-Cube Analytics & Data Services - All rights reserved.</div>
+                        <!--<ul class="mdl-mini-footer__link-list">-->
+                        <!--<li><a href="#">Help</a></li>-->
+                        <!--<li><a href="#">Privacy & Terms</a></li>-->
+                        <!--</ul>-->
                     </div>
-
-                    <div off-canvas="slidebar-2 right shift">
-                        <p>Slidebar with id 'slidebar-2' on the right side and shift style.</p>
-                    </div>
-
-                    <div off-canvas="slidebar-3 top push">
-                        <p>Slidebar with id 'slidebar-3' on the top and push style.</p>
-                    </div>
-
-                    <div off-canvas="slidebar-4 bottom overlay">
-                        <p>Slidebar with id 'slidebar-4' on the bottom and overlay style.</p>
-                    </div>
-                </div>
+                </footer>
             </main>
         </div>
         <script src="js/material.min.js"></script>
-        <script src="js/slidebars.js"></script>
-        <script src="js/scripts.js"></script>
+        <script src="js/mdl-selectfield.min.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js" charset="utf-8"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
+
+        <script src="js/dc.js"></script>
+        <!--<script src="js/mudit.js"></script>-->
+        <script src="js/dalela.js"></script>
     </body>
 </html>
