@@ -104,7 +104,7 @@ $(document).ready(function () {
                 );
 
                 var tatMetricName5 = cf.dimension(function (d) {
-                    return d["subType"];
+                    return d["metricName5"];
                 });
 //                tatMetricName5.filter("tat_count");
 
@@ -112,11 +112,9 @@ $(document).ready(function () {
                         function (p, v) {
                             if (isTATSum(v)) {
                                 p.numerator += +v.value;
-                                p.type = v.type;
                             }
                             if (isTATCount(v)) {
                                 p.denominator += +v.value;
-                                p.type = v.type;
                             }
                             p.avg = d3.round((p.numerator / p.denominator), 2);
                             return p;
@@ -125,11 +123,9 @@ $(document).ready(function () {
                         function (p, v) {
                             if (isTATSum(v)) {
                                 p.numerator -= +v.value;
-                                p.type = v.type;
                             }
                             if (isTATCount(v)) {
                                 p.denominator -= +v.value;
-                                p.type = v.type;
                             }
                             p.avg = d3.round((p.numerator / p.denominator), 2);
                             return p;
@@ -138,8 +134,7 @@ $(document).ready(function () {
                             return{
                                 denominator: 0,
                                 numerator: 0,
-                                avg: 0,
-                                type: ""
+                                avg: 0
                             };
                         }
                 );

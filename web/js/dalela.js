@@ -92,19 +92,15 @@ $(document).ready(function () {
             );
 
             var tatMetricName5 = cf.dimension(function (d) {
-                return d["subType"];
+                return d["metricName5"];
             });
-//                tatMetricName5.filter("tat_count");
-
             var tatMetricNameGroup5 = tatMetricName5.group().reduce(
                     function (p, v) {
                         if (isTATSum(v)) {
                             p.numerator += +v.value;
-                            p.type = v.type;
                         }
                         if (isTATCount(v)) {
                             p.denominator += +v.value;
-                            p.type = v.type;
                         }
                         p.avg = d3.round((p.numerator / p.denominator), 2);
                         return p;
@@ -113,11 +109,9 @@ $(document).ready(function () {
                     function (p, v) {
                         if (isTATSum(v)) {
                             p.numerator -= +v.value;
-                            p.type = v.type;
                         }
                         if (isTATCount(v)) {
                             p.denominator -= +v.value;
-                            p.type = v.type;
                         }
                         p.avg = d3.round((p.numerator / p.denominator), 2);
                         return p;
@@ -126,11 +120,47 @@ $(document).ready(function () {
                         return{
                             denominator: 0,
                             numerator: 0,
-                            avg: 0,
-                            type: ""
+                            avg: 0
                         };
                     }
             );
+
+            var tatMetricName6 = cf.dimension(function (d) {
+                return d["metricName6"];
+            });
+
+            var tatMetricNameGroup6 = tatMetricName6.group().reduce(
+                    function (p, v) {
+                        if (isConvNumerator(v)) {
+                            p.numerator += +v.value;
+                        }
+                        if (isConvDenominator(v)) {
+                            p.denominator += +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator*100), 2);
+                        return p;
+//                            console.log("p ::::::::::::::::::::" + p);
+                    },
+                    function (p, v) {
+                        if (isConvNumerator(v)) {
+                            p.numerator -= +v.value;
+                        }
+                        if (isConvDenominator(v)) {
+                            p.denominator -= +v.value;
+                        }
+                        p.avg = d3.round((p.numerator / p.denominator*100), 2);
+                        return p;
+                    },
+                    function () {
+                        return{
+                            denominator: 0,
+                            numerator: 0,
+                            avg: 0
+                        };
+                    }
+            );
+
+
         } else {
             var cf = crossfilter(data);
             var metricName1 = cf.dimension(function (d) {
@@ -298,11 +328,11 @@ $(document).ready(function () {
                         createTimeseriesUsingDc(chartId, tatMetricName4, tatMetricNameGroup4);
                         break;
                     case "5":
-                        createBarChartTATUsingDc(chartId, tatMetricName5, tatMetricNameGroup5);
+                        createRowChartTATUsingDc(chartId, tatMetricName5, tatMetricNameGroup5);
                         break;
-//        case "6":
-//            createBarChartTATUsingDc(chartId, metricName6, metricNameGroup6);
-//            break;
+                    case "6":
+                        createRowChartTATUsingDc(chartId, tatMetricName6, tatMetricNameGroup6);
+                        break;
                 }
             } else {
                 if (chartType === "Map") {
@@ -370,31 +400,31 @@ $(document).ready(function () {
                 } else if (chartType === "Bar") {
                     switch (chartMetricId) {
                         case "1":
-                            createBarChartUsingDc(chartId, metricName1, metricNameGroup1);
+                            createRowChartUsingDc(chartId, metricName1, metricNameGroup1);
                             break;
                         case "2":
-                            createBarChartUsingDc(chartId, metricName2, metricNameGroup2);
+                            createRowChartUsingDc(chartId, metricName2, metricNameGroup2);
                             break;
                         case "3":
-                            createBarChartUsingDc(chartId, metricName3, metricNameGroup3);
+                            createRowChartUsingDc(chartId, metricName3, metricNameGroup3);
                             break;
                         case "4":
-                            createBarChartUsingDc(chartId, metricName4, metricNameGroup4);
+                            createRowChartUsingDc(chartId, metricName4, metricNameGroup4);
                             break;
                         case "5":
-                            createBarChartUsingDc(chartId, metricName5, metricNameGroup5);
+                            createRowChartUsingDc(chartId, metricName5, metricNameGroup5);
                             break;
                         case "6":
-                            createBarChartUsingDc(chartId, metricName6, metricNameGroup6);
+                            createRowChartUsingDc(chartId, metricName6, metricNameGroup6);
                             break;
                         case "7":
-                            createBarChartUsingDc(chartId, metricName7, metricNameGroup7);
+                            createRowChartUsingDc(chartId, metricName7, metricNameGroup7);
                             break;
                         case "8":
-                            createBarChartUsingDc(chartId, metricName8, metricNameGroup8);
+                            createRowChartUsingDc(chartId, metricName8, metricNameGroup8);
                             break;
                         case "9":
-                            createBarChartUsingDc(chartId, metricName9, metricNameGroup9);
+                            createRowChartUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
                 } else if (chartType === "Dropdown") {
@@ -473,8 +503,13 @@ function isTATCount(v) {
     return v.type === "tat_count";
 }
 function isTATSum(v) {
-//    console.log("isTatSum :::::::::::" + v.type === "tat_sum");
     return v.type === "tat_sum";
+}
+function isConvNumerator(v) {
+    return v.type === "conversion_ratio_num";
+}
+function isConvDenominator(v) {
+    return v.type === "conversion_ratio_deno";
 }
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
@@ -498,7 +533,7 @@ function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
     chart.render();
 }
 
-function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
+function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
 //        var width = document.getElementById(chartId).offsetWidth;
     var chart = dc.rowChart("#" + chartId);
     chart
@@ -507,12 +542,12 @@ function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
             .elasticX(true)
             .dimension(cfDimension)
             .group(cfGroup)
-            .ordinalColors(['#3F51B5'])
+            .ordinalColors(['#7986CB'])
             .xAxis().tickFormat(d3.format('.1s'));
     chart.render();
 }
 
-function createBarChartTATUsingDc(chartId, cfDimension, cfGroup) {
+function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.rowChart("#" + chartId);
     chart
             .height(200)
@@ -525,7 +560,7 @@ function createBarChartTATUsingDc(chartId, cfDimension, cfGroup) {
             .dimension(cfDimension)
             .group(cfGroup)
             .elasticX(true)
-            .ordinalColors(['#303f9f']);
+            .ordinalColors(['#7986CB']);
     chart.filter = function () {};
     chart.render();
 }
