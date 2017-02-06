@@ -555,16 +555,16 @@ $(document).ready(function () {
                         createTimeseriesUsingDc(chartId, sohMetricName4, sohMetricNameGroup4);
                         break;
                     case "5":
-                        createRowChartUsingDc(chartId, sohMetricName5, sohMetricNameGroup5);
+                        createPieChartUsingDc(chartId, sohMetricName5, sohMetricNameGroup5);
                         break;
                     case "6":
-                        createRowChartTATUsingDc(chartId, sohMetricName6, sohMetricNameGroup6);
+                        createBarChartAvgUsingDc(chartId, sohMetricName6, sohMetricNameGroup6);
                         break;
                     case "7":
-                        createRowChartTATUsingDc(chartId, sohMetricName7, sohMetricNameGroup7);
+                        createBarChartAvgUsingDc(chartId, sohMetricName7, sohMetricNameGroup7);
                         break;
                     case "8":
-                        createRowChartTATUsingDc(chartId, sohMetricName8, sohMetricNameGroup8);
+                        createBarChartAvgUsingDc(chartId, sohMetricName8, sohMetricNameGroup8);
                         break;
                 }
             } else {
@@ -633,31 +633,31 @@ $(document).ready(function () {
                 } else if (chartType === "Bar") {
                     switch (chartMetricId) {
                         case "1":
-                            createRowChartUsingDc(chartId, metricName1, metricNameGroup1);
+                            createBarChartUsingDc(chartId, metricName1, metricNameGroup1);
                             break;
                         case "2":
-                            createRowChartUsingDc(chartId, metricName2, metricNameGroup2);
+                            createBarChartUsingDc(chartId, metricName2, metricNameGroup2);
                             break;
                         case "3":
-                            createRowChartUsingDc(chartId, metricName3, metricNameGroup3);
+                            createBarChartUsingDc(chartId, metricName3, metricNameGroup3);
                             break;
                         case "4":
-                            createRowChartUsingDc(chartId, metricName4, metricNameGroup4);
+                            createBarChartUsingDc(chartId, metricName4, metricNameGroup4);
                             break;
                         case "5":
-                            createRowChartUsingDc(chartId, metricName5, metricNameGroup5);
+                            createBarChartUsingDc(chartId, metricName5, metricNameGroup5);
                             break;
                         case "6":
-                            createRowChartUsingDc(chartId, metricName6, metricNameGroup6);
+                            createBarChartUsingDc(chartId, metricName6, metricNameGroup6);
                             break;
                         case "7":
-                            createRowChartUsingDc(chartId, metricName7, metricNameGroup7);
+                            createBarChartUsingDc(chartId, metricName7, metricNameGroup7);
                             break;
                         case "8":
-                            createRowChartUsingDc(chartId, metricName8, metricNameGroup8);
+                            createBarChartUsingDc(chartId, metricName8, metricNameGroup8);
                             break;
                         case "9":
-                            createRowChartUsingDc(chartId, metricName9, metricNameGroup9);
+                            createBarChartUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
                 } else if (chartType === "Dropdown") {
@@ -810,6 +810,53 @@ function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
     chart.render();
 }
 
+function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
+    var chart = dc.barChart("#" + chartId);
+    chart
+            .height(200)
+            .width(350)
+            .margins({top: 0, bottom: 30, left: 50, right: 20})
+            .dimension(cfDimension)
+            .group(cfGroup)
+//            .yAxisLabel("Count")
+            .elasticY(true)
+//            .showYAxis(false)
+            .x(d3.scale.ordinal().domain(cfDimension)) // Need the empty val to offset the first value
+            .xUnits(dc.units.ordinal) // Tell Dc.js that we're using an ordinal x axis
+            .ordinalColors(['#7986CB'])
+//            .label(function (d) {
+//                return d.key + " = " + d.value;
+//            })
+            .centerBar(false);
+
+    chart.render();
+}
+
+function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
+    var chart = dc.barChart("#" + chartId);
+    chart
+            .height(200)
+            .width(350)
+            .margins({top: 0, bottom: 30, left: 50, right: 20})
+            .dimension(cfDimension)
+            .group(cfGroup)
+//            .yAxisLabel("Count")
+            .elasticY(true)
+//            .showYAxis(false)
+            .valueAccessor(function (p) {
+                return p.value.avg;
+            })
+            .x(d3.scale.ordinal().domain(cfDimension)) // Need the empty val to offset the first value
+            .xUnits(dc.units.ordinal) // Tell Dc.js that we're using an ordinal x axis
+            .ordinalColors(['#7986CB'])
+//            .label(function (d) {
+//                return d.key + " = " + d.value;
+//            })
+            .centerBar(false);
+
+    chart.render();
+}
+
 function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
     var width = document.getElementById(chartId).offsetWidth;
     var chart = dc.selectMenu("#" + chartId);
@@ -828,7 +875,7 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
     chart
             .height(75)
             .width(1100)
-            .x(d3.scale.ordinal())
+            .x(d3.scale.ordinal().domain(cfDimension))
             .xUnits(dc.units.ordinal)
             .dimension(cfDimension)
             .group(cfGroup)

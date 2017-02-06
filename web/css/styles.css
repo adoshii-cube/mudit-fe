@@ -74,6 +74,13 @@ textarea{
     width: 140px;
 }
 
+.header-shadow{
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12) !important;
+}
+
+.mdl-layout__header-row .mdl-navigation__link{
+    color: #ae285d !important;
+}
 
 .android-header {
     overflow: visible;
@@ -1044,6 +1051,10 @@ div .mdl-textfield__label:after {
     margin: 0 auto;
 }
 
+.mdl-chart__bar text{
+    font-size: 12px;
+}
+
 .mdl-chart__timeseries{
     min-height: 75px;
 }
@@ -1146,7 +1157,7 @@ select:focus {
 .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
     /*border: 2px solid #ED462F;*/
     font-weight: 600;
-    background: #FF6E40;
+    background: #ae285d;
     color: white;
     border-right: none;
     box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);

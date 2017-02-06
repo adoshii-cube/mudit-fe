@@ -60,11 +60,11 @@
     </head>
     <body id="hiring_dashboard">
         <div class="mdl-layout mdl-js-layout">
-            <header class="mdl-layout__header mdl-layout__header--scroll">
+            <header class="mdl-layout__header mdl-layout__header--scroll mdl-layout__header--transparent header-shadow">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
                     <span class="mdl-layout-title">
-                        <img class="android-logo-image" src="images/OWEN_Logo_white.png" alt="OWEN Logo">
+                        <img class="android-logo-image" src="images/Axis_Bank_logo.svg" alt="Axis Bank Logo">
                     </span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
@@ -77,106 +77,109 @@
                     </nav>
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Title</span>
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                </nav>
-            </div>
+            <!--            <div class="mdl-layout__drawer">
+                            <span class="mdl-layout-title">Title</span>
+                            <nav class="mdl-navigation">
+                                <a class="mdl-navigation__link" href="">Link</a>
+                                <a class="mdl-navigation__link" href="">Link</a>
+                                <a class="mdl-navigation__link" href="">Link</a>
+                                <a class="mdl-navigation__link" href="">Link</a>
+                            </nav>
+                        </div>-->
             <main class="mdl-layout__content">
                 <%
                     int totalTabs = 1;
                     int tabNumber = 1;
                 %>
                 <!--<section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">-->
-                    <div class="page-content">
-                        <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                            <div class="mdl-grid mdl-grid--no-spacing">
-                                <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-phone">
-                                    <div class="mdl-tabs__tab-bar">
-                                        <%
-                                            ChartHelper ch = new ChartHelper();
-                                            List<Question> questionList = ch.getQuestionForTab(tabNumber);
-                                            List<Integer> questionIdList = new ArrayList<>();
-                                            for (int i = 0; i < questionList.size(); i++) {
-                                                Question q = questionList.get(i);
-                                                String question = q.getQuestionText();
-                                                int questionId = q.getPageId();
-                                                questionIdList.add(q.getPageId());
-                                        %>
-
-                                        <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
-                                            <!--<span class="hollow-circle"></span>-->
-                                            <div>
-                                                <%=question%>
-                                            </div>
-                                        </a>
-                                        <%}%>   
-                                    </div>
-
-                                </div>
-
-                                <div class="mdl-cell mdl-cell--10-col">
+                <div class="page-content">
+                    <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                        <div class="mdl-grid mdl-grid--no-spacing">
+                            <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-phone">
+                                <div class="mdl-tabs__tab-bar">
                                     <%
-                                        JSONArray qIdList = new JSONArray(questionIdList);
-                                        System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
-                                        String jArrayQIdList = qIdList.toString();
+                                        ChartHelper ch = new ChartHelper();
+                                        List<Question> questionList = ch.getQuestionForTab(tabNumber);
+                                        List<Integer> questionIdList = new ArrayList<>();
                                         for (int i = 0; i < questionList.size(); i++) {
                                             Question q = questionList.get(i);
+                                            String question = q.getQuestionText();
                                             int questionId = q.getPageId();
+                                            questionIdList.add(q.getPageId());
                                     %>
-                                    <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
 
-                                        <div class="android-card-container">
-                                            <%
-                                                List<Metric> rawData =  ch.getChartDataForPage(questionId);
-                                                JSONArray rawDataInJSON = new JSONArray(rawData);
-                                                String rawDataJSONArray = rawDataInJSON.toString();
-                                                List<Chart> chartList = ch.getChartMapping(questionId);
-
-                                                for (int j = 0; j < chartList.size(); j++) {
-                                                    Chart chart = chartList.get(j);
-                                                    String chartType = chart.getChartType();
-                                                    String className = "";
-                                                    if (chartType.equals("Map")) {
-                                                        className = "mdl-chart__map mdl-cell--4-col";
-                                                    } else if (chartType.equals("Pie")) {
-                                                        className = "mdl-chart__pie mdl-cell--4-col";
-                                                    } else if (chartType.equals("Bar")) {
-                                                        className = "mdl-chart__bar mdl-cell--4-col";
-                                                    } else if (chartType.equals("Dropdown")) {
-                                                        className = "mdl-chart__dropdown mdl-cell--4-col";
-                                                    } else if (chartType.equals("Timeseries")) {
-                                                        className = "mdl-chart__timeseries mdl-cell--12-col";
-                                                    }
-                                            %>
-                                            <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionId%>_chart<%=chart.getChartId()%>">
-                                                <div class="mdl-card__title">
-                                                    <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
-                                                </div>
-                                                <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
-                                                <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
-                                                <input type="hidden" id="pageNumber" value='<%=questionId%>'/>
-                                                <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
-                                            </div>
-                                            <%}%>
+                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
+                                        <!--<span class="hollow-circle"></span>-->
+                                        <div>
+                                            <%=question%>
                                         </div>
-                                    </div>
-                                    <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
-                                    <%}%> 
-                                    <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
+                                    </a>
+                                    <%}%>   
                                 </div>
+
+                            </div>
+
+                            <div class="mdl-cell mdl-cell--10-col">
+                                <%
+                                    JSONArray qIdList = new JSONArray(questionIdList);
+                                    System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
+                                    String jArrayQIdList = qIdList.toString();
+                                    for (int i = 0; i < questionList.size(); i++) {
+                                        Question q = questionList.get(i);
+                                        int questionId = q.getPageId();
+                                %>
+                                <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
+
+                                    <div class="android-card-container">
+                                        <%
+                                            List<Metric> rawData = ch.getChartDataForPage(questionId);
+                                            JSONArray rawDataInJSON = new JSONArray(rawData);
+                                            String rawDataJSONArray = rawDataInJSON.toString();
+                                            List<Chart> chartList = ch.getChartMapping(questionId);
+
+                                            for (int j = 0; j < chartList.size(); j++) {
+                                                Chart chart = chartList.get(j);
+                                                String chartType = chart.getChartType();
+                                                String className = "";
+                                                if (chartType.equals("Map")) {
+                                                    className = "mdl-chart__map mdl-cell--4-col";
+                                                } else if (chartType.equals("Pie")) {
+                                                    className = "mdl-chart__pie mdl-cell--4-col";
+                                                } else if (chartType.equals("Bar")) {
+                                                    className = "mdl-chart__bar mdl-cell--4-col";
+                                                } else if (chartType.equals("Dropdown")) {
+                                                    className = "mdl-chart__dropdown mdl-cell--4-col";
+                                                } else if (chartType.equals("Timeseries")) {
+                                                    className = "mdl-chart__timeseries mdl-cell--12-col";
+                                                }
+                                        %>
+                                        <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionId%>_chart<%=chart.getChartId()%>">
+                                            <div class="mdl-card__title">
+                                                <h2 class="mdl-card__title-text"><%=chart.getChartTitle()%></h2>
+                                            </div>
+                                            <input type="hidden" id="chartType" value='<%=chart.getChartType()%>'/>
+                                            <input type="hidden" id="chartMetricId" value='<%=chart.getMetricId()%>'/>
+                                            <input type="hidden" id="pageNumber" value='<%=questionId%>'/>
+                                            <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
+                                <%}%> 
+                                <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
                             </div>
                         </div>
-
                     </div>
+
+                </div>
                 <!--</section>-->
                 <footer class="mdl-mini-footer">
                     <div class="mdl-mini-footer__left-section">
-                        <div class="mdl-logo">© 2017 i-Cube Analytics & Data Services - All rights reserved.</div>
+                        <div class="mdl-logo">
+                            <img class="android-logo-image" src="images/OWEN_Logo_white.png" alt="OWEN Logo">
+                            © 2017 i-Cube Analytics & Data Services - All rights reserved.
+                        </div>
                         <!--<ul class="mdl-mini-footer__link-list">-->
                         <!--<li><a href="#">Help</a></li>-->
                         <!--<li><a href="#">Privacy & Terms</a></li>-->

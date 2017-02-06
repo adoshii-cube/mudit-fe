@@ -13,7 +13,7 @@
             session.setAttribute("username", user.getUserName());
             session.setAttribute("role", user.getRoleId());
             if (user.getRoleId() == 1) {
-                response.sendRedirect("corp-dashboard.jsp");
+                response.sendRedirect("hiring.jsp");
             } else {
                 response.sendRedirect("index.jsp");
             }
