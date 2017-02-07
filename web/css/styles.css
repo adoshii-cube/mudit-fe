@@ -45,6 +45,10 @@ textarea{
     max-height:120px    
 }
 
+.form-width{
+    width: 100%;
+}
+
 .android-header .mdl-menu__container {
     z-index: 50;
     margin: 0 !important;
@@ -526,6 +530,7 @@ textarea{
 .android-card-container .mdl-card__title-text {
     color: black;
     height: auto;
+    font-weight: bold;
 }
 
 .android-card-container .mdl-card__supporting-text {
@@ -603,139 +608,8 @@ textarea{
     margin: 0 auto;
 }
 
-.mdl-grid table{
-    /*width: 94%;*/
-}
-
-.clients {
-    /*background: #bdbdbd;*/
-    padding: 1em 0;
-    text-align: center;
-    color: #424242;
-    /*font-weight: bold;*/
-}
-
-section.section--center {
-    max-width: 860px;
-    align-items: center;
-    justify-content: center;
-}
-
-.android-screen {
-    text-align: center;
-    height: 80px;
-    width: auto;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-}
-
-.android-screen:hover{
-    filter: grayscale(0%);
-    -webkit-filter: grayscale(0%);
-    -moz-filter: grayscale(0%);
-    -ms-filter: grayscale(0%);
-    -o-filter: grayscale(0%);
-}
-
-.client-header{
-    padding-bottom: 1em;
-}
-
-.client1{
-    background-image: url("../images/clients/SVG_Client1.svg");
-    height: 50px;
-}
-
-.client2{
-    background-image: url("../images/clients/SVG_Client2.svg");
-    height: 60px;
-}
-
-.client3{
-    background-image: url("../images/clients/SVG_Client3.svg");
-    height: 60px;
-}
-
-.client4{
-    background-image: url("../images/clients/SVG_Client4.svg");
-    height: 60px;
-}
-
-.client5{
-    background-image: url("../images/clients/SVG_Client5.svg");
-}
-
-.client6{
-    background-image: url("../images/clients/SVG_Client6.svg");
-    height: 30px;
-}
-
-.client7{
-    background-image: url("../images/clients/SVG_Client7.svg");
-    height: 40px;
-}
-
-.client8{
-    background-image: url("../images/clients/SVG_Client8.svg");
-    height: 60px;
-}
-
-.social{
-    background: #303f9f;
-    line-height: initial;
-    min-width: 36px;
-}
-
-.social:hover,
-.social:focus:not(:active){
-    background: #303f9f;
-}
-
-.cards-connect{
-    line-height: initial;
-    float: right;
-    color: #303f9f;
-}
-
-.team-card{
-    min-height: 150px;
-}
-
-.career-card{
-    height: 110%;
-    margin-left: -5%;
-    margin-right: -5%;
-}
-
-.form-width{
-    width: 100%;
-}
-
 div .mdl-textfield__label:after {
     background: #303f9f;
-}
-
-.docs-toc h4{
-    display: table-cell;
-    width: 350px;
-    padding-right: 60px;
-}
-
-.docs-toc li{
-    position: relative;
-    font-size: 14px;
-    list-style: none;
-}
-
-.docs-toc li a{
-    color: rgb(0, 188, 212);
-    text-decoration: none;
 }
 
 .section-content{
@@ -749,49 +623,6 @@ div .mdl-textfield__label:after {
     border-left: 3px solid rgb(192, 235, 241);
 }
 
-.resources h2{
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.541176);
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-.resources-bg{
-    background: rgba(169, 169, 169, 0.05);
-    padding-bottom: 4em;
-}
-
-.android-card-container .blog1 {
-    height: 250px;
-    background: url('../images/blogs/blog_cover_2.png') center / cover;
-    display: flex;
-}
-
-.android-card-container .blog2 {
-    height: 250px;
-    background: url('../images/blogs/blog_cover_4.png') center / cover;
-    display: flex;
-}
-
-.android-card-container .blog3 {
-    height: 250px;
-    background: url('../images/blogs/blog_cover_5.png') center / cover;
-    display: flex;
-}
-
-.android-card-container .blog4 {
-    height: 250px;
-    background: url('../images/blogs/blog_cover_6.png') center / cover;
-    display: flex;
-}
-
-.blog1 .mdl-card__title-text,
-.blog2 .mdl-card__title-text,
-.blog3 .mdl-card__title-text,
-.blog4 .mdl-card__title-text{
-    color: #ffffff
-}
-
 .mdl-mega-footer--top-section{
     border-bottom: 1px solid #E2E2E2;
 }
@@ -802,126 +633,6 @@ div .mdl-textfield__label:after {
 
 .bottom-border{
     border-bottom: 1px solid #E2E2E2;
-}
-
-.sol-card-1,
-.sol-card-2,
-.sol-card-3,
-.sol-card-4{
-    height: 220px;
-    max-width: 100%;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    -ms-transform: all 0.3s;
-    -o-transform: all 0.3s;
-    transition: all 0.3s;
-    cursor: pointer;
-}
-
-.sol-card-1:hover,
-.sol-card-2:hover,
-.sol-card-3:hover,
-.sol-card-4:hover{
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1);
-}
-
-.sol-card-1 > .mdl-card__actions,
-.sol-card-2 > .mdl-card__actions,
-.sol-card-3 > .mdl-card__actions,
-.sol-card-4 > .mdl-card__actions{
-    height: 52px;
-    padding: 16px;
-    background: rgba(0, 0, 0, 0.2);
-    color: #ffffff;
-    font-weight: 600;
-}
-
-.sol-card-1{
-    background: url(../images/solutions/talent-acquisition.jpg) center / cover !important;
-}
-
-.sol-card-2{
-    background: url(../images/solutions/productivity.jpg) center / cover !important;
-}
-
-
-.sol-card-3{
-    background: url(../images/solutions/onboarding-engagement.png) center / cover !important;
-}
-
-.sol-card-4{
-    background: url(../images/solutions/retention.png) center / cover !important;
-}
-
-.solution-header{
-    /*height: 15vh;*/
-}
-
-.title{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
-
-.solution1{
-    background: #99d3d4 !important;
-}
-
-.solution2{
-    background: #3640a2 !important;
-}
-
-.solution3{
-    background: #00c2b7 !important;
-}
-
-.solution4{
-    background: #f0652c !important;
-}
-.solution-container{
-    /*height: 75vh;*/
-}
-
-.solutions{
-    padding: 2.5em;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.solution{
-    max-width: 25vw;
-    text-align: left;
-}
-
-.talent-acquisition-bg,
-.productivity-bg,
-.onboarding-engagement-bg,
-.retention-bg{
-    /*    background: url("../images/solutions/talent-acquisition.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 75vh;*/
-    overflow: hidden;
-    background: transparent;
-}
-
-.talent-acquisition-bg img,
-.productivity-bg img,
-.onboarding-engagement-bg img,
-.retention-bg img{
-    width: 100%;
-    display: block;
-    margin: auto;
-}
-
-.onboarding-engagement-bg img{
-    width: 90%;
 }
 
 .no-margin{
@@ -937,65 +648,13 @@ div .mdl-textfield__label:after {
     text-decoration: none;
 }
 
-.page-bg-image{
-    background: #ebce26 center no-repeat;
-    background-image: url('../images/howitworks.png');
-    background-size: inherit;
-    height: 340px;
-    height: 50vh;
-    margin-bottom: -170px;
-    margin-bottom: -20vh;
-}
-
-.hiw-header-height{
-    min-height: 50px;
-    padding: 0.5em;
-    text-align: center;
-    margin: 1em 0 0;
-}
-
-.hiw-header-height span{
-    font-size: 1.2em;
-    font-weight: 500!important;
-}
-
-.hiw-header-height .mdl-card__supporting-text{
-    width: 100%;
-    padding: 1em 0 1em;    
-}
-
 .page-content{
     width: auto;
     margin: auto;
+    min-height: 100vh;
     /*max-width: 978px;*/
 }
 
-.page-card{
-    margin-bottom: 0;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    /*margin-bottom: 40px;*/
-    margin-top: 40px;
-}
-
-.page-body{
-    background-color: #F4F4F4;
-    padding: 20px 0 40px;
-}
-
-.android-card-container .side-media{
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
-    -webkit-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    flex-direction: row;
-    margin-top: 2em;
-}
 
 @media only screen and (max-width: 767px){
     .android-card-container .side-media{
@@ -1005,33 +664,6 @@ div .mdl-textfield__label:after {
         -webkit-flex-direction: column;
         flex-direction: column;       
     }
-
-    .side-media .ona-image,
-    .side-media .ml-image{
-        height: 170px !important;
-    }
-}
-
-.side-media .ona-image,
-.side-media .ml-image{
-    height: initial;
-    min-width: 30%;
-    border-right: 1px #e0e0e0 solid;
-    padding: 25px;
-    background-position: center;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    display: flex;
-    /*height: 170px;*/
-}
-
-.side-media .ona-image{
-    background: url(../images/ona.png) center #fafafa;
-}
-
-.side-media .ml-image{
-    background: url(../images/ml.png) center #040201;
-    /*background-size: cover !important;*/
 }
 
 /*AXIS DASHBOARD*/
@@ -1059,10 +691,6 @@ div .mdl-textfield__label:after {
     min-height: 75px;
 }
 
-.mdl-chart__timeseries svg{
-    margin:  auto;
-}
-
 .mdl-chart__dropdown{
     min-height: 75px !important;
     max-height: 75px !important;
@@ -1073,17 +701,19 @@ div .mdl-textfield__label:after {
     width: calc(33.3333333333% - 16px) !important;
 }
 
-.mdl-chart__bar svg{
-    /*width:80%;*/
-}
 .mdl-chart__map svg,
-.mdl-chart__pie svg{
-    /*width:80%;*/
+.mdl-chart__pie svg,
+.mdl-chart__bar svg,
+.mdl-chart__timeseries svg{
     margin: 0 auto;
 }
 
 .chart-body text{
     font-size: 12px;
+}
+
+.mdl-chart__bar text{
+    fill: #000000;
 }
 
 select {

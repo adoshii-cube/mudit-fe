@@ -2446,7 +2446,43 @@
                 _legend.parent(_chart);
                 return _chart;
             };
+            
+            /**
+             * Get or set the root g element. This method is usually used to retrieve the g element in order to
+             * overlay custom svg drawing programatically. **Caution**: The root g element is usually generated
+             * by dc.js internals, and resetting it might produce unpredictable result.
+             * @name g
+             * @memberof dc.coordinateGridMixin
+             * @instance
+             * @param {SVGElement} [gElement]
+             * @return {SVGElement}
+             * @return {dc.coordinateGridMixin}
+             */
+            _chart.g = function (gElement) {
+                if (!arguments.length) {
+                    return _chart._g;
+                }
+                _chart._g = gElement;
+                return _chart;
+            };
 
+            /**
+             * Turn on/off the click filter.
+             * @name clickOn
+             * @memberof dc.baseMixin
+             * @instance
+             * @param {Boolean} [clickOn=true]
+             * @return {Boolean}
+             * @return {dc.baseMixin}
+             */
+            _chart.clickOn = function (clickOn) {
+                if (!arguments.length) {
+                    return _clickOn;
+                }
+                _clickOn = clickOn;
+                return _chart;
+            };
+            
             /**
              * Returns the internal numeric ID of the chart.
              * @method chartID
@@ -2531,6 +2567,22 @@
                 _listeners.on(event, listener);
                 return _chart;
             };
+
+            window.addEventListener('resize', function () {
+                // if the chart is a sub chart then don't do anything
+                if (!_chart.g() || _chart.g().node().offsetParent === null || (_chart.g().node().classList && _chart.g().node().classList.contains('sub'))) {
+                    return false;
+                }
+
+                _height = null;
+                _width = null;
+
+                if (_chart.rescale) {
+                    _chart.rescale();
+                }
+
+                _chart.redraw();
+            });
 
             return _chart;
         };
@@ -2769,8 +2821,18 @@
          */
         dc.coordinateGridMixin = function (_chart) {
             var GRID_LINE_CLASS = 'grid-line';
+            var CHART_BODY_CLASS = 'chart-body';
             var HORIZONTAL_CLASS = 'horizontal';
             var VERTICAL_CLASS = 'vertical';
+
+            var AXIS_LABEL_CLASS = 'axis';
+            var Y_AXIS_CLASS = 'y';
+            var X_AXIS_CLASS = 'x';
+            var Y_LEFT_AXIS_CLASS = 'y-left';
+            var Y_RIGHT_AXIS_CLASS = 'y-right';
+            var Y_AXIS_LABEL_CLASS = Y_AXIS_CLASS + '-' + AXIS_LABEL_CLASS + '-label';
+            var X_AXIS_LABEL_CLASS = X_AXIS_CLASS + '-' + AXIS_LABEL_CLASS + '-label';
+
             var Y_AXIS_LABEL_CLASS = 'y-axis-label';
             var X_AXIS_LABEL_CLASS = 'x-axis-label';
             var DEFAULT_AXIS_LABEL_PADDING = 12;
@@ -3240,7 +3302,6 @@
                 }
 
                 _xAxis = _xAxis.scale(_chart.x());
-
                 renderVerticalGridLines(g);
             }
 
@@ -8600,6 +8661,40 @@
                 dc.transition(axisG, _chart.transitionDuration(), _chart.transitionDelay())
                         .call(_xAxis);
             }
+
+            function renderXAxisLabel() {
+                var text = _chart.xAxisLabel();
+
+                if (text) {
+                    var axisXLab = _chart.g().selectAll('text.' + X_AXIS_LABEL_CLASS);
+
+                    if (axisXLab.empty()) {
+                        axisXLab = _chart.g().append('text')
+                                .attr('class', X_AXIS_LABEL_CLASS)
+                                .attr('text-anchor', 'middle');
+                    }
+
+                    if (axisXLab.text() !== text) {
+                        axisXLab.text(text);
+                    }
+
+                    // wrap the x axis label
+                    _chart._wrapLabels(axisXLab, _chart.effectiveWidth());
+
+                    // calculate the height of the x axis label
+                    _chart.xAxisLabelPadding = axisXLab.node().getBBox().height + AXIS_LABEL_PADDING + AXIS_LABEL_PADDING;
+
+                    axisXLab.attr('transform',
+                            'translate(' + (_chart.axisWidth() / 2) +
+                            ',' + (_chart.height() - _chart.xAxisLabelPadding + AXIS_LABEL_PADDING) + ')'
+                            );
+
+                    dc.transition(axisXLab, _chart.transitionDuration())
+                            .attr('transform', 'translate(' + (_chart.axisWidth() / 2) + ',' +
+                                    (_chart.height() - _chart.xAxisLabelPadding + AXIS_LABEL_PADDING) + ')');
+                }
+            }
+
 
             _chart._doRender = function () {
                 _chart.resetSvg();

@@ -3,6 +3,11 @@ $(document).ready(function () {
     $("#tab1-panel").addClass("is-active");
     $("#question-tab-1").addClass("is-active");
 
+    $(".mdl-tabs__tab").on("click", function () {
+        dc.renderAll();
+    });
+
+
     var jArray = $('#questionIdList').val();
     var jsonObj = $.parseJSON(jArray);
     jQuery.each(jsonObj, function (i, quesId) {
@@ -369,6 +374,11 @@ $(document).ready(function () {
 
         } else {
             var cf = crossfilter(data);
+            var parseDate = d3.time.format.utc("%y-%m-%d").parse;
+            data.forEach(function (d) {
+                d.date = new parseDate(d.metricName4);
+            });
+
             var metricName1 = cf.dimension(function (d) {
                 return d["metricName1"];
             });
@@ -749,11 +759,8 @@ function isCompensationSum(v) {
 }
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
-//        var width = document.getElementById(chartId).offsetWidth;
     chart = dc.pieChart("#" + chartId);
     chart
-            .height(200)
-            .width(300)
             .dimension(cfDimension)
             .group(cfGroup)
             .externalLabels(10)
@@ -764,17 +771,13 @@ function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
                     return d.value;
                 })) * 100, 1) + "%";
             });
-//                .legend(dc.legend().x(175).horizontal(false));
 //        chart.filter = function () {};
-    chart.render();
+    plotResponsiveCharts(chartId);
 }
 
 function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
-//        var width = document.getElementById(chartId).offsetWidth;
     var chart = dc.rowChart("#" + chartId);
     chart
-            .height(200)
-            .width(350)
             .elasticX(true)
             .dimension(cfDimension)
             .group(cfGroup)
@@ -786,35 +789,26 @@ function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
 //                return -d.value;
 //            })
             .xAxis().tickFormat(d3.format('.1s'));
-    chart.render();
+    plotResponsiveCharts(chartId);
 }
 
 function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.rowChart("#" + chartId);
     chart
-            .height(200)
-            .width(350)
-//            .x(d3.scale.ordinal())
-//            .xUnits(dc.units.ordinal)
             .valueAccessor(function (p) {
                 return p.value.avg;
             })
             .dimension(cfDimension)
             .group(cfGroup)
             .elasticX(true)
-//            .label(function (d) {
-//                return d.key + " = " + d.value.avg;
-//            })
             .ordinalColors(['#7986CB']);
     chart.filter = function () {};
-    chart.render();
+    plotResponsiveCharts(chartId);
 }
 
 function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.barChart("#" + chartId);
     chart
-            .height(200)
-            .width(350)
             .margins({top: 0, bottom: 30, left: 50, right: 20})
             .dimension(cfDimension)
             .group(cfGroup)
@@ -829,14 +823,41 @@ function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
 //            })
             .centerBar(false);
 
-    chart.render();
+    chart.on("renderlet", function (chart) {
+        var gLabels = chart.select(".labels");
+        if (gLabels.empty()) {
+            gLabels = chart.select(".chart-body").append('g').classed('labels', true);
+        }
+
+        var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
+        gLabelsData.exit().remove(); //Remove unused elements
+
+        gLabelsData.enter().append("text") //Add new elements
+
+        gLabelsData
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .text(function (d) {
+                    return d3.select(d).data()[0].data.value
+                })
+                .attr('x', function (d) {
+                    return +d.getAttribute('x') + (d.getAttribute('width') / 2);
+                })
+                .attr('y', function (d) {
+                    return +d.getAttribute('y') + 15;
+                })
+                .attr('style', function (d) {
+                    if (+d.getAttribute('height') < 18)
+                        return "display:none";
+                });
+    });
+
+    plotResponsiveCharts(chartId);
 }
 
 function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.barChart("#" + chartId);
     chart
-            .height(200)
-            .width(350)
             .margins({top: 0, bottom: 30, left: 50, right: 20})
             .dimension(cfDimension)
             .group(cfGroup)
@@ -854,15 +875,41 @@ function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
 //            })
             .centerBar(false);
 
-    chart.render();
+    chart.on("renderlet", function (chart) {
+        var gLabels = chart.select(".labels");
+        if (gLabels.empty()) {
+            gLabels = chart.select(".chart-body").append('g').classed('labels', true);
+        }
+
+        var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
+        gLabelsData.exit().remove(); //Remove unused elements
+
+        gLabelsData.enter().append("text") //Add new elements
+
+        gLabelsData
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .text(function (d) {
+                    return d3.select(d).data()[0].data.value.avg
+                })
+                .attr('x', function (d) {
+                    return +d.getAttribute('x') + (d.getAttribute('width') / 2);
+                })
+                .attr('y', function (d) {
+                    return +d.getAttribute('y') + 15;
+                })
+                .attr('style', function (d) {
+                    if (+d.getAttribute('height') < 18)
+                        return "display:none";
+                });
+    });
+
+    plotResponsiveCharts(chartId);
 }
 
 function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
-    var width = document.getElementById(chartId).offsetWidth;
     var chart = dc.selectMenu("#" + chartId);
     chart
-//            .height(275)
-//            .width(width)
             .dimension(cfDimension)
             .group(cfGroup)
             .controlsUseVisibility(true);
@@ -874,9 +921,9 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
     var chart = dc.barChart("#" + chartId);
     chart
             .height(75)
-            .width(1100)
-            .x(d3.scale.ordinal().domain(cfDimension))
-            .xUnits(dc.units.ordinal)
+            .transitionDuration(0)
+//            .x(d3.scale.ordinal().domain(cfDimension))
+//            .xUnits(dc.units.ordinal)
             .dimension(cfDimension)
             .group(cfGroup)
             .showYAxis(false)
@@ -918,7 +965,32 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
                         return "display:none";
                 });
     });
+//    chart.render();
+    plotResponsiveCharts(chartId);
+}
+
+function createTimeseriesUsingDc2(chartId, cfDimension, cfGroup) {
+    var minDate = cfDimension.bottom(1)[0].metricName4;
+    var maxDate = cfDimension.top(1)[0].metricName4;
+    var chart = dc.barChart("#" + chartId);
+    chart
+            .height(75)
+            .width(900)
+            .x(d3.time.scale().domain([minDate, maxDate]))
+            .xUnits(d3.time.years)
+            .valueAccessor(function (p) {
+                return p.value;
+            })
+            .dimension(cfDimension)
+            .group(cfGroup)
+            .xAxis().tickFormat(d3.time.format('%y-%m'));
     chart.render();
+}
+
+function plotResponsiveCharts(chartId) {
+    document.getElementById(chartId).style.display = 'none';
+    document.getElementById(chartId).style.display = 'block';
+    dc.renderAll();
 }
 
 //LOGIN PAGE JS START
