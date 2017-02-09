@@ -1,7 +1,12 @@
 $(document).ready(function () {
 
-    $("#tab1-panel").addClass("is-active");
-    $("#question-tab-1").addClass("is-active");
+    //SELECT FIRST QUESTION ON LEFT FOR EACH PAGE
+    var selectTab = $('body').find(".mdl-tabs__tab").attr('id');
+    $('body').find("#" + selectTab).addClass("is-active");
+
+    //SELECT CORRESPONDING PANEL OF CHARTS ON RIGHT FOR RESPECTIVE QUESTION
+    var selectPanel = $('body').find(".mdl-tabs__tab").attr('href');
+    $('body').find(selectPanel).addClass("is-active");
 
     $(".mdl-tabs__tab").on("click", function () {
         dc.renderAll();
@@ -13,9 +18,9 @@ $(document).ready(function () {
     jQuery.each(jsonObj, function (i, quesId) {
         var jArray = $('#rawData' + quesId).val();
         var data = $.parseJSON(jArray);
-        data.forEach(function (d) {
-            d.metricName4 = new Date(d.metricName4);
-        });
+//        data.forEach(function (d) {
+//            d.metricName4 = new Date(d.metricName4);
+//        });
         if (quesId === 3) {
             var cf = crossfilter(data);
             var tatMetricName1 = cf.dimension(function (d) {
@@ -79,7 +84,7 @@ $(document).ready(function () {
                     }
             );
             var tatMetricName4 = cf.dimension(function (d) {
-                return +d.metricName4;
+                return d.metricName4;
             });
             var tatMetricNameGroup4 = tatMetricName4.group().reduce(
                     function (p, v) {
@@ -232,7 +237,7 @@ $(document).ready(function () {
                     }
             );
             var sohMetricName4 = cf.dimension(function (d) {
-                return +d.metricName4;
+                return d.metricName4;
             });
             var sohMetricNameGroup4 = sohMetricName4.group().reduce(
                     function (p, v) {
@@ -427,7 +432,7 @@ $(document).ready(function () {
                     }
             );
             var metricName4 = cf.dimension(function (d) {
-                return +d.metricName4;
+                return d.metricName4;
             });
             var metricNameGroup4 = metricName4.group().reduce(
                     function (p, v) {
@@ -729,7 +734,7 @@ $(document).ready(function () {
                             createTimeseriesUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
-                }
+                } 
 
             }
 
@@ -916,21 +921,52 @@ function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
-    var minDate = cfDimension.bottom(1)[0].metricName4;
-    var maxDate = cfDimension.top(1)[0].metricName4;
-
+//    var minDate = cfDimension.bottom(1)[0].metricName4;
+//    var maxDate = cfDimension.top(1)[0].metricName4;
     var chart = dc.barChart("#" + chartId);
     chart
-            .x(d3.time.scale().domain([minDate, maxDate]))
-            .xUnits(d3.time.days)
+            .height(75)
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+//            .x(d3.time.scale().domain([minDate, maxDate]))
+//            .xUnits(d3.time.months)
+//            .brushOn(true)
             .elasticY(true)
-            .brushOn(true)
             .dimension(cfDimension)
             .group(cfGroup)
-            .mouseZoomable(true)
+//            .mouseZoomable(true)
             .showYAxis(false)
-            .centerBar(true)
+//            .centerBar(true)
             .colors(['#303f9f']);
+
+    chart.on("renderlet", function (chart) {
+        var gLabels = chart.select(".labels");
+        if (gLabels.empty()) {
+            gLabels = chart.select(".chart-body").append('g').classed('labels', true);
+        }
+
+        var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
+        gLabelsData.exit().remove(); //Remove unused elements
+
+        gLabelsData.enter().append("text"); //Add new elements
+
+        gLabelsData
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .text(function (d) {
+                    return d3.select(d).data()[0].data.value;
+                })
+                .attr('x', function (d) {
+                    return +d.getAttribute('x') + (d.getAttribute('width') / 2);
+                })
+                .attr('y', function (d) {
+                    return +d.getAttribute('y') + 15;
+                })
+                .attr('style', function (d) {
+                    if (+d.getAttribute('height') < 18)
+                        return "display:none";
+                });
+    });
     plotResponsiveCharts(chartId);
 }
 
