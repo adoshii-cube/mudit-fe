@@ -100,7 +100,7 @@
                                     <%
                                         ChartHelper ch = new ChartHelper();
                                         List<Question> questionList = ch.getQuestionForTab(tabNumber);
-                                        List<Integer> questionIdList = new ArrayList<>();
+                                        List<Integer> questionIdList = new ArrayList<Integer>();
                                         for (int i = 0; i < questionList.size(); i++) {
                                             Question q = questionList.get(i);
                                             String question = q.getQuestionText();
@@ -122,7 +122,6 @@
                             <div class="mdl-cell mdl-cell--10-col">
                                 <%
                                     JSONArray qIdList = new JSONArray(questionIdList);
-                                    System.out.println("qIdList :::::::::::::::::::::: " + qIdList);
                                     String jArrayQIdList = qIdList.toString();
                                     for (int i = 0; i < questionList.size(); i++) {
                                         Question q = questionList.get(i);
