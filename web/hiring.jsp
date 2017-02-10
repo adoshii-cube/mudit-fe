@@ -72,7 +72,7 @@
                     <nav class="mdl-navigation">
                         <a class="mdl-navigation__link" href="">Hiring</a>
                         <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
-                        <a class="mdl-navigation__link" href="attrition.jsp">Attrition</a>
+                        <a class="mdl-navigation__link" href="">Attrition</a>
                         <a class="mdl-navigation__link" href="index.jsp">Logout</a>
                     </nav>
                 </div>
@@ -100,7 +100,7 @@
                                     <%
                                         ChartHelper ch = new ChartHelper();
                                         List<Question> questionList = ch.getQuestionForTab(tabNumber);
-                                        List<Integer> questionIdList = new ArrayList<Integer>();
+                                        List<Integer> questionIdList = new ArrayList<>();
                                         for (int i = 0; i < questionList.size(); i++) {
                                             Question q = questionList.get(i);
                                             String question = q.getQuestionText();
@@ -108,7 +108,7 @@
                                             questionIdList.add(q.getPageId());
                                     %>
 
-                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
+                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>" onclick="loadData(<%=questionId%>)">
                                         <!--<span class="hollow-circle"></span>-->
                                         <div>
                                             <%=question%>
@@ -119,12 +119,12 @@
 
                             </div>
 
-                            <div class="mdl-cell mdl-cell--10-col">
+                            <div class="mdl-cell mdl-cell--10-col" id="parentDiv">
                                 <%
                                     JSONArray qIdList = new JSONArray(questionIdList);
                                     String jArrayQIdList = qIdList.toString();
-                                    for (int i = 0; i < questionList.size(); i++) {
-                                        Question q = questionList.get(i);
+//                                    for (int i = 0; i < questionList.size(); i++) {
+                                        Question q = questionList.get(0);
                                         int questionId = q.getPageId();
                                 %>
                                 <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
-                                <%}%> 
+                                <% //}%> 
                                 <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
                             </div>
                         </div>
@@ -195,6 +195,7 @@
 
         <script src="js/dc.js"></script>
         <!--<script src="js/mudit.js"></script>-->
-        <script src="js/dalela.js"></script>
+        <!--<script src="js/dalela.js"></script>-->
+        <script src="js/lucknow.js"></script>
     </body>
 </html>
