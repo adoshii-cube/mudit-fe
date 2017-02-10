@@ -93,6 +93,7 @@
                 %>
                 <!--<section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">-->
                 <div class="page-content">
+                    <!--<div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>-->
                     <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                         <div class="mdl-grid mdl-grid--no-spacing">
                             <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-phone">
@@ -124,11 +125,13 @@
                                     JSONArray qIdList = new JSONArray(questionIdList);
                                     String jArrayQIdList = qIdList.toString();
 //                                    for (int i = 0; i < questionList.size(); i++) {
-                                        Question q = questionList.get(0);
-                                        int questionId = q.getPageId();
+                                    Question q = questionList.get(0);
+                                    int questionId = q.getPageId();
                                 %>
                                 <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
-
+                                    <script>
+                                        console.log("Start Data Call");
+                                    </script>
                                     <div class="android-card-container">
                                         <%
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
@@ -165,6 +168,9 @@
                                     </div>
                                 </div>
                                 <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
+                                <script>
+                                    console.log("End Data Call");
+                                </script>
                                 <% //}%> 
                                 <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
                             </div>

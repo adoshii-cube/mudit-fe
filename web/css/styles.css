@@ -670,6 +670,12 @@ div .mdl-textfield__label:after {
 /*.dc-chart{
     font-family: 'Roboto', 'sans-serif';
 }*/
+
+#loader{
+    /*display: none;*/
+    width: 100%;
+}
+
 .mdl-chart__map{
     /*height: 50vh;*/
     /*width: 100vw;*/

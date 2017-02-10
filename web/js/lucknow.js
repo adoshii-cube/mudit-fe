@@ -18,6 +18,8 @@ $(document).ready(function () {
     var quesId = Object.values(jsonObj)[0];
     var jArray = $('#rawData' + quesId).val();
     renderChartsByQuestion(quesId, jArray);
+    
+//    $('#loader').css('display', 'none');
 });
 
 function renderChartsByQuestion(quesId, jArray) {
@@ -748,6 +750,7 @@ function renderChartsByQuestion(quesId, jArray) {
 function loadData(quesId) {
     var divToCheck = $('body').find("#tab" + quesId + "-panel");
     if (divToCheck.length === 0) {
+//        $('#loader').css('display', 'block');
         $.ajax({
             type: "POST",
             data: {
@@ -763,6 +766,7 @@ function loadData(quesId) {
                 var selectPanel = $('body').find("#question-tab-" + quesId).attr('href');
                 $("body").find(selectPanel).addClass("is-active");
                 renderChartsByQuestion(quesId, jArray);
+                $('#loader').css('display', 'none');
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
