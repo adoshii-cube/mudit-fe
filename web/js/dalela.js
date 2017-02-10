@@ -320,7 +320,7 @@ $(document).ready(function () {
                         if (isTATSum(v)) {
                             p.numerator += +v.value;
                         }
-                        if (isCandidateCount(v)) {
+                        if (isTATCount(v)) {
                             p.denominator += +v.value;
                         }
                         p.avg = d3.round((p.numerator / p.denominator), 1);
@@ -331,7 +331,7 @@ $(document).ready(function () {
                         if (isTATSum(v)) {
                             p.numerator -= +v.value;
                         }
-                        if (isCandidateCount(v)) {
+                        if (isTATCount(v)) {
                             p.denominator -= +v.value;
                         }
                         p.avg = d3.round((p.numerator / p.denominator), 1);
