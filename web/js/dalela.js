@@ -289,7 +289,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator += +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 1);
                         return p;
 //                            console.log("p ::::::::::::::::::::" + p);
                     },
@@ -300,7 +300,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator -= +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator * 100), 2);
+                        p.avg = d3.round((p.numerator / p.denominator * 100), 1);
                         return p;
                     },
                     function () {
@@ -323,7 +323,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator += +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        p.avg = d3.round((p.numerator / p.denominator), 1);
                         return p;
 //                            console.log("p ::::::::::::::::::::" + p);
                     },
@@ -334,7 +334,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator -= +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        p.avg = d3.round((p.numerator / p.denominator), 1);
                         return p;
                     },
                     function () {
@@ -357,7 +357,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator += +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        p.avg = d3.round((p.numerator / p.denominator), 1);
                         return p;
 //                            console.log("p ::::::::::::::::::::" + p);
                     },
@@ -368,7 +368,7 @@ $(document).ready(function () {
                         if (isCandidateCount(v)) {
                             p.denominator -= +v.value;
                         }
-                        p.avg = d3.round((p.numerator / p.denominator), 2);
+                        p.avg = d3.round((p.numerator / p.denominator), 1);
                         return p;
                     },
                     function () {
@@ -734,7 +734,8 @@ $(document).ready(function () {
                             createTimeseriesUsingDc(chartId, metricName9, metricNameGroup9);
                             break;
                     }
-                } 
+                }
+
 
             }
 
@@ -816,12 +817,16 @@ function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
             .margins({top: 0, bottom: 30, left: 50, right: 20})
             .dimension(cfDimension)
             .group(cfGroup)
-//            .yAxisLabel("Count")
+            .yAxisLabel("No. of candidates")
             .elasticY(true)
 //            .showYAxis(false)
             .x(d3.scale.ordinal().domain(cfDimension)) // Need the empty val to offset the first value
             .xUnits(dc.units.ordinal) // Tell Dc.js that we're using an ordinal x axis
             .ordinalColors(['#7986CB'])
+//            .ordering(function (d) {
+//                return -d.value;
+//            })
+//            .yAxis().tickFormat(d3.format('.1s'));
 //            .label(function (d) {
 //                return d.key + " = " + d.value;
 //            })

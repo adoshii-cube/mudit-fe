@@ -1,21 +1,21 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="org.icube.question.Question"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.icube.metric.Metric"%>
-<%@page import="org.icube.chart.Chart"%>
-<%@page import="java.util.List"%>
-<%@page import="org.icube.chart.ChartHelper"%>
 <%-- 
-    Document   : hiring
-    Created on : 31 Jan, 2017, 4:49:12 PM
+    Document   : attrition
+    Created on : 8 Feb, 2017, 1:44:54 PM
     Author     : adoshi
 --%>
 
+<%@page import="org.icube.chart.Chart"%>
+<%@page import="org.icube.metric.Metric"%>
+<%@page import="org.json.JSONArray"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.icube.question.Question"%>
+<%@page import="java.util.List"%>
+<%@page import="org.icube.chart.ChartHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>OWEN Analytics - AI driven Hiring</title>
+        <title>OWEN Analytics - AI driven Attrition</title>
 
         <meta name="description" content="Axis Bank - OWEN Analytics HR Solutions">
         <meta name="keywords" content="human resources, HR, big data, talent management, talent acquisition, productivity, onboarding, onboarding and engagement, recruitment, solution, insights, machine learning, artificial intelligence, organizational network analysis, ona, retention, attrition">
@@ -44,7 +44,7 @@
         <link rel="stylesheet" href="css/mdl-selectfield.min.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+        <script type="text/javascript" src="http://d3js.org/queue.v1.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/dc.css"/>
 
         <link rel='shortcut icon' type='image/x-icon' href='images/OWEN_Favicon.ico'/>
@@ -58,7 +58,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#303f9f">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     </head>
-    <body id="hiring_dashboard">
+    <body id="attrition_dashboard">
         <div class="mdl-layout mdl-js-layout">
             <header class="mdl-layout__header mdl-layout__header--scroll mdl-layout__header--transparent header-shadow">
                 <div class="mdl-layout__header-row">
@@ -70,28 +70,18 @@
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Hiring</a>
+                        <a class="mdl-navigation__link" href="hiring.jsp">Hiring</a>
                         <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
-                        <a class="mdl-navigation__link" href="attrition.jsp">Attrition</a>
+                        <a class="mdl-navigation__link" href="">Attrition</a>
                         <a class="mdl-navigation__link" href="index.jsp">Logout</a>
                     </nav>
                 </div>
             </header>
-            <!--            <div class="mdl-layout__drawer">
-                            <span class="mdl-layout-title">Title</span>
-                            <nav class="mdl-navigation">
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                            </nav>
-                        </div>-->
             <main class="mdl-layout__content">
                 <%
                     int totalTabs = 1;
-                    int tabNumber = 1;
+                    int tabNumber = 2;
                 %>
-                <!--<section class="mdl-layout__tab-panel" id="scroll-tab-<%=tabNumber%>">-->
                 <div class="page-content">
                     <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                         <div class="mdl-grid mdl-grid--no-spacing">
@@ -151,6 +141,8 @@
                                                     className = "mdl-chart__dropdown mdl-cell--4-col";
                                                 } else if (chartType.equals("Timeseries")) {
                                                     className = "mdl-chart__timeseries mdl-cell--12-col";
+                                                } else if (chartType.equals("Dual Axes Line")) {
+                                                    className = "mdl-chart__line mdl-cell--6-col";
                                                 }
                                         %>
                                         <div class="mdl-cell mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp <%=className%>" id="pg<%=questionId%>_chart<%=chart.getChartId()%>">
@@ -173,7 +165,7 @@
                     </div>
 
                 </div>
-                <!--</section>-->
+
                 <footer class="mdl-mini-footer">
                     <div class="mdl-mini-footer__left-section">
                         <div class="mdl-logo">
