@@ -16,14 +16,18 @@ $(document).ready(function () {
     var jArray = $('#questionIdList').val();
     var jsonObj = $.parseJSON(jArray);
     var quesId = Object.values(jsonObj)[0];
+    console.log("Q1 ::: Call Data");
     var jArray = $('#rawData' + quesId).val();
+    console.log("Q1 ::: Received Data");
     renderChartsByQuestion(quesId, jArray);
-    
+    console.log("Q1 ::: Completed plotting charts");
 //    $('#loader').css('display', 'none');
 });
 
 function renderChartsByQuestion(quesId, jArray) {
+    console.log("Q1 ::: Inside function renderChartsByQuestion()");
     var data = $.parseJSON(jArray);
+    console.log("Q1 ::: Parsed jArray to JSON");
     if (quesId === 3) {
         var cf = crossfilter(data);
         var tatMetricName1 = cf.dimension(function (d) {
@@ -384,8 +388,10 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
     } else {
+        console.log("Q1 ::: Create crossfilter");
         var cf = crossfilter(data);
-
+        console.log("Q1 ::: Completed creating crossfilter");
+        
         var metricName1 = cf.dimension(function (d) {
             return d["metricName1"];
         });
@@ -585,6 +591,7 @@ function renderChartsByQuestion(quesId, jArray) {
                     break;
             }
         } else {
+            console.log("Q1 ::: Call plotting function for " + chartId);
             if (chartType === "Map") {
                 switch (chartMetricId) {
                     case "1":
@@ -799,6 +806,7 @@ function isCompensationSum(v) {
 }
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
+    console.log("Q1 ::: START Pie Chart for " + chartId);
     chart = dc.pieChart("#" + chartId);
     chart
             .dimension(cfDimension)
@@ -813,6 +821,7 @@ function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
             });
 //        chart.filter = function () {};
     plotResponsiveCharts(chartId);
+    console.log("Q1 ::: END Pie Chart for " + chartId);
 }
 
 function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
@@ -847,6 +856,7 @@ function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
+    console.log("Q1 ::: START Bar Chart for " + chartId);
     var chart = dc.barChart("#" + chartId);
     chart
             .margins({top: 0, bottom: 30, left: 50, right: 20})
@@ -893,6 +903,7 @@ function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
     });
 
     plotResponsiveCharts(chartId);
+    console.log("Q1 ::: END Pie Chart for " + chartId);
 }
 
 function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
@@ -948,17 +959,20 @@ function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
+    console.log("Q1 ::: START Dropdown for " + chartId);
     var chart = dc.selectMenu("#" + chartId);
     chart
             .dimension(cfDimension)
             .group(cfGroup)
             .controlsUseVisibility(true);
     chart.render();
+    console.log("Q1 ::: END Dropdown for " + chartId);
 }
 
 function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
 //    var minDate = cfDimension.bottom(1)[0].metricName4;
 //    var maxDate = cfDimension.top(1)[0].metricName4;
+    console.log("Q1 ::: START Timeseries for " + chartId);
     var chart = dc.barChart("#" + chartId);
     chart
             .height(75)
@@ -1004,12 +1018,15 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
                 });
     });
     plotResponsiveCharts(chartId);
+    console.log("Q1 ::: END Timeseries for " + chartId);
 }
 
 function plotResponsiveCharts(chartId) {
+    console.log("Q1 ::: START - Make chart responsive for " + chartId);
     document.getElementById(chartId).style.display = 'none';
     document.getElementById(chartId).style.display = 'block';
     dc.renderAll();
+    console.log("Q1 ::: END - Make chart responsive for " + chartId);
 }
 
 //LOGIN PAGE JS START
