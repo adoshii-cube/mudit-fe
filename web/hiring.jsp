@@ -1,3 +1,4 @@
+<%@page import="org.icube.helper.Stopwatch"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.icube.question.Question"%>
 <%@page import="org.json.JSONArray"%>
@@ -101,7 +102,7 @@
                                     <%
                                         ChartHelper ch = new ChartHelper();
                                         List<Question> questionList = ch.getQuestionForTab(tabNumber);
-                                        List<Integer> questionIdList = new ArrayList<>();
+                                        List<Integer> questionIdList = new ArrayList<Integer>();
                                         for (int i = 0; i < questionList.size(); i++) {
                                             Question q = questionList.get(i);
                                             String question = q.getQuestionText();
@@ -133,12 +134,12 @@
                                         console.log("Start Data Call");
                                     </script>
                                     <div class="android-card-container">
-                                        <%
+                                        <%Stopwatch sw = new Stopwatch();
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
                                             JSONArray rawDataInJSON = new JSONArray(rawData);
                                             String rawDataJSONArray = rawDataInJSON.toString();
                                             List<Chart> chartList = ch.getChartMapping(questionId);
-
+                                            System.out.println("Fetching the data from java : " + sw.elapsedTime());
                                             for (int j = 0; j < chartList.size(); j++) {
                                                 Chart chart = chartList.get(j);
                                                 String chartType = chart.getChartType();
