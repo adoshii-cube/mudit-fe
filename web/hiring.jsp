@@ -136,6 +136,7 @@
                                     <div class="android-card-container">
                                         <%Stopwatch sw = new Stopwatch();
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
+                                            System.out.println("Raw Data ::::::::: "+ rawData);
                                             JSONArray rawDataInJSON = new JSONArray(rawData);
                                             String rawDataJSONArray = rawDataInJSON.toString();
                                             List<Chart> chartList = ch.getChartMapping(questionId);
