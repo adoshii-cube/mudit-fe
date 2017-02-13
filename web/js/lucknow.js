@@ -31,7 +31,7 @@ function renderChartsByQuestion(quesId, jArray) {
     if (quesId === 3) {
         var cf = crossfilter(data);
         var tatMetricName1 = cf.dimension(function (d) {
-            return d["metricName1"];
+            return d["m1"];
         });
         var tatMetricNameGroup1 = tatMetricName1.group().reduce(
                 function (p, v) {
@@ -51,7 +51,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var tatMetricName2 = cf.dimension(function (d) {
-            return d["metricName2"];
+            return d["m2"];
         });
         var tatMetricNameGroup2 = tatMetricName2.group().reduce(
                 function (p, v) {
@@ -71,7 +71,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var tatMetricName3 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var tatMetricNameGroup3 = tatMetricName3.group().reduce(
                 function (p, v) {
@@ -91,7 +91,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var tatMetricName4 = cf.dimension(function (d) {
-            return d.metricName4;
+            return d.m4;
         });
         var tatMetricNameGroup4 = tatMetricName4.group().reduce(
                 function (p, v) {
@@ -112,7 +112,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var tatMetricName5 = cf.dimension(function (d) {
-            return d["metricName5"];
+            return d["m5"];
         });
         var tatMetricNameGroup5 = tatMetricName5.group().reduce(
                 function (p, v) {
@@ -146,7 +146,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var tatMetricName6 = cf.dimension(function (d) {
-            return d["metricName6"];
+            return d["m6"];
         });
 
         var tatMetricNameGroup6 = tatMetricName6.group().reduce(
@@ -184,7 +184,7 @@ function renderChartsByQuestion(quesId, jArray) {
     } else if (quesId === 4) {
         var cf = crossfilter(data);
         var sohMetricName1 = cf.dimension(function (d) {
-            return d["metricName1"];
+            return d["m1"];
         });
         var sohMetricNameGroup1 = sohMetricName1.group().reduce(
                 function (p, v) {
@@ -204,7 +204,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var sohMetricName2 = cf.dimension(function (d) {
-            return d["metricName2"];
+            return d["m2"];
         });
         var sohMetricNameGroup2 = sohMetricName2.group().reduce(
                 function (p, v) {
@@ -224,7 +224,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var sohMetricName3 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var sohMetricNameGroup3 = sohMetricName3.group().reduce(
                 function (p, v) {
@@ -244,7 +244,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var sohMetricName4 = cf.dimension(function (d) {
-            return d.metricName4;
+            return d.m4;
         });
         var sohMetricNameGroup4 = sohMetricName4.group().reduce(
                 function (p, v) {
@@ -265,7 +265,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var sohMetricName5 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var sohMetricNameGroup5 = sohMetricName5.group().reduce(
                 function (p, v) {
@@ -286,7 +286,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var sohMetricName6 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var sohMetricNameGroup6 = sohMetricName6.group().reduce(
                 function (p, v) {
@@ -320,7 +320,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var sohMetricName7 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var sohMetricNameGroup7 = sohMetricName7.group().reduce(
                 function (p, v) {
@@ -354,7 +354,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
         var sohMetricName8 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var sohMetricNameGroup8 = sohMetricName8.group().reduce(
                 function (p, v) {
@@ -393,7 +393,7 @@ function renderChartsByQuestion(quesId, jArray) {
         console.log("Q1 ::: Completed creating crossfilter");
         
         var metricName1 = cf.dimension(function (d) {
-            return d["metricName1"];
+            return d["m1"];
         });
         var metricNameGroup1 = metricName1.group().reduce(
                 function (p, v) {
@@ -409,7 +409,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName2 = cf.dimension(function (d) {
-            return d["metricName2"];
+            return d["m2"];
         });
         var metricNameGroup2 = metricName2.group().reduce(
                 function (p, v) {
@@ -425,7 +425,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName3 = cf.dimension(function (d) {
-            return d["metricName3"];
+            return d["m3"];
         });
         var metricNameGroup3 = metricName3.group().reduce(
                 function (p, v) {
@@ -441,7 +441,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName4 = cf.dimension(function (d) {
-            return d.metricName4;
+            return d.m4;
         });
         var metricNameGroup4 = metricName4.group().reduce(
                 function (p, v) {
@@ -457,7 +457,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName5 = cf.dimension(function (d) {
-            return d["metricName5"];
+            return d["m5"];
         });
         var metricNameGroup5 = metricName5.group().reduce(
                 function (p, v) {
@@ -473,7 +473,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName6 = cf.dimension(function (d) {
-            return d["metricName6"];
+            return d["m6"];
         });
         var metricNameGroup6 = metricName6.group().reduce(
                 function (p, v) {
@@ -489,7 +489,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName7 = cf.dimension(function (d) {
-            return d["metricName7"];
+            return d["m7"];
         });
         var metricNameGroup7 = metricName7.group().reduce(
                 function (p, v) {
@@ -505,7 +505,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName8 = cf.dimension(function (d) {
-            return d["metricName8"];
+            return d["m8"];
         });
         var metricNameGroup8 = metricName8.group().reduce(
                 function (p, v) {
@@ -521,7 +521,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName9 = cf.dimension(function (d) {
-            return d["metricName9"];
+            return d["m9"];
         });
         var metricNameGroup9 = metricName9.group().reduce(
                 function (p, v) {
