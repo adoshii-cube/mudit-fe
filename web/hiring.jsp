@@ -37,10 +37,11 @@
 
 
         <!-- Page styles -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,thin,black,medium&amp;lang=en">-->
+        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
         <link rel="stylesheet" href="css/material.min.css">
-        <link href="css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />
+        <!--<link href="css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/mdl-selectfield.min.css">
 
