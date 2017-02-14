@@ -136,11 +136,25 @@
                                     <div class="android-card-container">
                                         <%Stopwatch sw = new Stopwatch();
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
-                                            System.out.println("Raw Data ::::::::: "+ rawData);
+                                            System.out.println("getChartDataForPage : " + sw.elapsedTime());%>
+                                        <script>
+                                            console.log("JSP ::: getChartDataForPage");
+                                        </script>
+                                        <%  Stopwatch sw1 = new Stopwatch();
                                             JSONArray rawDataInJSON = new JSONArray(rawData);
-                                            String rawDataJSONArray = rawDataInJSON.toString();
+                                            System.out.println("rawDataInJSON data : " + rawDataInJSON.length());
+                                            System.out.println("rawDataInJSON : " + sw1.elapsedTime());%>
+                                        <script>
+                                            console.log("JSP ::: rawDataInJSON ::: " + <%=rawDataInJSON.length()%>);
+                                            console.log("JSP ::: rawDataInJSON");
+                                        </script>
+                                        <%Stopwatch sw3 = new Stopwatch();
                                             List<Chart> chartList = ch.getChartMapping(questionId);
-                                            System.out.println("Fetching the data from java : " + sw.elapsedTime());
+                                            System.out.println("chartList : " + sw3.elapsedTime());%>
+                                        <script>
+                                            console.log("JSP ::: chartList");
+                                        </script>
+                                        <%Stopwatch sw4 = new Stopwatch();
                                             for (int j = 0; j < chartList.size(); j++) {
                                                 Chart chart = chartList.get(j);
                                                 String chartType = chart.getChartType();
@@ -166,10 +180,15 @@
                                             <input type="hidden" id="pageNumber" value='<%=questionId%>'/>
                                             <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
                                         </div>
-                                        <%}%>
+                                        <%}
+                                            System.out.println("chartList looping : " + sw4.elapsedTime());
+                                        %>
+                                        <script>
+                                            console.log("JSP ::: chartList looping");
+                                        </script>
                                     </div>
                                 </div>
-                                <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
+                                <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataInJSON%>'/>
                                 <script>
                                     console.log("End Data Call");
                                 </script>
@@ -197,11 +216,13 @@
         </div>
         <script src="js/material.min.js"></script>
         <script src="js/mdl-selectfield.min.js"></script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/crossfilter.min.js"></script>
+        <script src="js/dc.min.js"></script>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js" charset="utf-8"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js" charset="utf-8"></script>-->
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>-->
 
-        <script src="js/dc.js"></script>
         <!--<script src="js/mudit.js"></script>-->
         <!--<script src="js/dalela.js"></script>-->
         <script src="js/lucknow.js"></script>

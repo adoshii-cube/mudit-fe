@@ -391,7 +391,7 @@ function renderChartsByQuestion(quesId, jArray) {
         console.log("Q1 ::: Create crossfilter");
         var cf = crossfilter(data);
         console.log("Q1 ::: Completed creating crossfilter");
-        
+
         var metricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
