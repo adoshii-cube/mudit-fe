@@ -124,8 +124,6 @@
                             <div class="mdl-cell mdl-cell--10-col" id="parentDiv">
                                 <%
                                     JSONArray qIdList = new JSONArray(questionIdList);
-                                    String jArrayQIdList = qIdList.toString();
-//                                    for (int i = 0; i < questionList.size(); i++) {
                                     Question q = questionList.get(0);
                                     int questionId = q.getPageId();
                                 %>
@@ -193,7 +191,7 @@
                                     console.log("End Data Call");
                                 </script>
                                 <% //}%> 
-                                <input type="hidden" id="questionIdList" value='<%=jArrayQIdList%>'/> 
+                                <input type="hidden" id="questionIdList" value='<%=qIdList%>'/> 
                             </div>
                         </div>
                     </div>
