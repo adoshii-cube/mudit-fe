@@ -111,7 +111,7 @@
                                             questionIdList.add(q.getPageId());
                                     %>
 
-                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>" onclick="loadData(<%=questionId%>)">
+                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
                                         <!--<span class="hollow-circle"></span>-->
                                         <div>
                                             <%=question%>
@@ -129,30 +129,17 @@
                                     int questionId = q.getPageId();
                                 %>
                                 <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
-                                    <script>
-                                        console.log("Start Data Call");
-                                    </script>
                                     <div class="android-card-container">
                                         <%Stopwatch sw = new Stopwatch();
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
                                             System.out.println("getChartDataForPage : " + sw.elapsedTime());%>
-                                        <script>
-                                            console.log("JSP ::: getChartDataForPage");
-                                        </script>
                                         <%  Stopwatch sw1 = new Stopwatch();
                                             JSONArray rawDataInJSON = new JSONArray(rawData);
                                             System.out.println("rawDataInJSON data : " + rawDataInJSON.length());
                                             System.out.println("rawDataInJSON : " + sw1.elapsedTime());%>
-                                        <script>
-                                            console.log("JSP ::: rawDataInJSON ::: " + <%=rawDataInJSON.length()%>);
-                                            console.log("JSP ::: rawDataInJSON");
-                                        </script>
                                         <%Stopwatch sw3 = new Stopwatch();
                                             List<Chart> chartList = ch.getChartMapping(questionId);
                                             System.out.println("chartList : " + sw3.elapsedTime());%>
-                                        <script>
-                                            console.log("JSP ::: chartList");
-                                        </script>
                                         <%Stopwatch sw4 = new Stopwatch();
                                             for (int j = 0; j < chartList.size(); j++) {
                                                 Chart chart = chartList.get(j);
@@ -182,15 +169,9 @@
                                         <%}
                                             System.out.println("chartList looping : " + sw4.elapsedTime());
                                         %>
-                                        <script>
-                                            console.log("JSP ::: chartList looping");
-                                        </script>
                                     </div>
                                 </div>
                                 <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataInJSON%>'/>
-                                <script>
-                                    console.log("End Data Call");
-                                </script>
                                 <% //}%> 
                                 <input type="hidden" id="questionIdList" value='<%=qIdList%>'/> 
                             </div>

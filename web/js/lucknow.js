@@ -3,31 +3,42 @@ $(document).ready(function () {
 //    SELECT FIRST QUESTION ON LEFT FOR EACH PAGE
     var selectTab = $('body').find(".mdl-tabs__tab").attr('id');
     $('body').find("#" + selectTab).addClass("is-active");
-
 //    SELECT CORRESPONDING PANEL OF CHARTS ON RIGHT FOR RESPECTIVE QUESTION
     var selectPanel = $('body').find(".mdl-tabs__tab").attr('href');
     $('body').find(selectPanel).addClass("is-active");
 
     $(".mdl-tabs__tab").on("click", function () {
+        //REMOVE ACTIVE CLASS FOR ALL PANELS
+        $("body").find(".mdl-tabs__panel").removeClass("is-active");
+        //ONLY ADD ACTIVE TO THE PANEL'S CORRESPONDING QUESTION THAT WAS CLICKED
+        var x = $('body').find(".mdl-tabs__tab.is-active").attr('href');
+        $('body').find(x).addClass("is-active");
+//    DC.RENDERALL AS ONLY PG 1 CHARTS ARE RENDERED ON PG LOAD.
+//    CHARTS FOR OTHER PAGES ARE NOT RENDERED
+//    IF CHARTS FOR OTHER PAGES ARE RENDERED ON PG LOAD, THEY WILL CAUSE PG1 CHARTS TO BE RE-RENDERED (FLICKERING)
         dc.renderAll();
+
     });
 
-
-    var jArray = $('#questionIdList').val();
-    var jsonObj = $.parseJSON(jArray);
-    var quesId = Object.values(jsonObj)[0];
-    console.log("Q1 ::: Call Data");
+    var quesId = Object.values(quesIdList)[0];
     var jArray = $('#rawData' + quesId).val();
-    console.log("Q1 ::: Received Data");
     renderChartsByQuestion(quesId, jArray);
-    console.log("Q1 ::: Completed plotting charts");
 //    $('#loader').css('display', 'none');
 });
+var quesIds = $('#questionIdList').val();
+quesIdList = $.parseJSON(quesIds);
+
+$.each(quesIdList, function (i, j) {
+    var x = $('body').find("#rawData" + j).val();
+    if (x === undefined) {
+        loadData(j);
+//        return false;
+    }
+});
+
 
 function renderChartsByQuestion(quesId, jArray) {
-    console.log("Q1 ::: Inside function renderChartsByQuestion()");
     var data = $.parseJSON(jArray);
-    console.log("Q1 ::: Parsed jArray to JSON");
     if (quesId === 3) {
         var cf = crossfilter(data);
         var tatMetricName1 = cf.dimension(function (d) {
@@ -124,7 +135,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     }
                     p.avg = d3.round((p.numerator / p.denominator), 2);
                     return p;
-//                            console.log("p ::::::::::::::::::::" + p);
                 },
                 function (p, v) {
                     if (isTATSum(v)) {
@@ -159,7 +169,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     }
                     p.avg = d3.round((p.numerator / p.denominator * 100), 2);
                     return p;
-//                            console.log("p ::::::::::::::::::::" + p);
                 },
                 function (p, v) {
                     if (isConvNumerator(v)) {
@@ -298,7 +307,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     }
                     p.avg = d3.round((p.numerator / p.denominator * 100), 2);
                     return p;
-//                            console.log("p ::::::::::::::::::::" + p);
                 },
                 function (p, v) {
                     if (isConvNumerator(v)) {
@@ -332,7 +340,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     }
                     p.avg = d3.round((p.numerator / p.denominator), 2);
                     return p;
-//                            console.log("p ::::::::::::::::::::" + p);
                 },
                 function (p, v) {
                     if (isTATSum(v)) {
@@ -366,7 +373,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     }
                     p.avg = d3.round((p.numerator / p.denominator), 2);
                     return p;
-//                            console.log("p ::::::::::::::::::::" + p);
                 },
                 function (p, v) {
                     if (isCompensationSum(v)) {
@@ -388,9 +394,7 @@ function renderChartsByQuestion(quesId, jArray) {
         );
 
     } else {
-        console.log("Q1 ::: Create crossfilter");
         var cf = crossfilter(data);
-        console.log("Q1 ::: Completed creating crossfilter");
 
         var metricName1 = cf.dimension(function (d) {
             return d["m1"];
@@ -591,7 +595,6 @@ function renderChartsByQuestion(quesId, jArray) {
                     break;
             }
         } else {
-            console.log("Q1 ::: Call plotting function for " + chartId);
             if (chartType === "Map") {
                 switch (chartMetricId) {
                     case "1":
@@ -769,9 +772,6 @@ function loadData(quesId) {
                 parents.append(res);
                 $response = $(res);
                 var jArray = $response.filter('#rawData' + quesId).val();
-                $("body").find(".mdl-tabs__panel").removeClass("is-active");
-                var selectPanel = $('body').find("#question-tab-" + quesId).attr('href');
-                $("body").find(selectPanel).addClass("is-active");
                 renderChartsByQuestion(quesId, jArray);
                 $('#loader').css('display', 'none');
 
@@ -806,7 +806,6 @@ function isCompensationSum(v) {
 }
 
 function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
-    console.log("Q1 ::: START Pie Chart for " + chartId);
     chart = dc.pieChart("#" + chartId);
     chart
             .dimension(cfDimension)
@@ -821,7 +820,6 @@ function createPieChartUsingDc(chartId, cfDimension, cfGroup) {
             });
 //        chart.filter = function () {};
     plotResponsiveCharts(chartId);
-    console.log("Q1 ::: END Pie Chart for " + chartId);
 }
 
 function createRowChartUsingDc(chartId, cfDimension, cfGroup) {
@@ -856,7 +854,6 @@ function createRowChartTATUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
-    console.log("Q1 ::: START Bar Chart for " + chartId);
     var chart = dc.barChart("#" + chartId);
     chart
             .margins({top: 0, bottom: 30, left: 50, right: 20})
@@ -903,7 +900,6 @@ function createBarChartUsingDc(chartId, cfDimension, cfGroup) {
     });
 
     plotResponsiveCharts(chartId);
-    console.log("Q1 ::: END Pie Chart for " + chartId);
 }
 
 function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
@@ -959,20 +955,17 @@ function createBarChartAvgUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
-    console.log("Q1 ::: START Dropdown for " + chartId);
     var chart = dc.selectMenu("#" + chartId);
     chart
             .dimension(cfDimension)
             .group(cfGroup)
             .controlsUseVisibility(true);
     chart.render();
-    console.log("Q1 ::: END Dropdown for " + chartId);
 }
 
 function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
 //    var minDate = cfDimension.bottom(1)[0].metricName4;
 //    var maxDate = cfDimension.top(1)[0].metricName4;
-    console.log("Q1 ::: START Timeseries for " + chartId);
     var chart = dc.barChart("#" + chartId);
     chart
             .height(75)
@@ -1018,15 +1011,18 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
                 });
     });
     plotResponsiveCharts(chartId);
-    console.log("Q1 ::: END Timeseries for " + chartId);
 }
 
 function plotResponsiveCharts(chartId) {
-    console.log("Q1 ::: START - Make chart responsive for " + chartId);
     document.getElementById(chartId).style.display = 'none';
     document.getElementById(chartId).style.display = 'block';
-    dc.renderAll();
-    console.log("Q1 ::: END - Make chart responsive for " + chartId);
+    
+//    PLOT CHARTS FOR PG 1 ONLY.
+//    SKIP RENDERALL FOR CHARTS OF OTHER PAGES.
+//    RENDERALL IS BEING CALLED ON TAB CHANGE
+    if (chartId.split("_")[0] === 'pg1') {
+        dc.renderAll();
+    }
 }
 
 //LOGIN PAGE JS START
