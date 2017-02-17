@@ -111,7 +111,7 @@
                                             questionIdList.add(q.getPageId());
                                     %>
 
-                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab" id="question-tab-<%=questionId%>">
+                                    <a href="#tab<%=questionId%>-panel" class="mdl-tabs__tab vertical-mdl-tabs-disabled" id="question-tab-<%=questionId%>">
                                         <!--<span class="hollow-circle"></span>-->
                                         <div>
                                             <%=question%>

@@ -6,6 +6,8 @@ $(document).ready(function () {
 //    SELECT CORRESPONDING PANEL OF CHARTS ON RIGHT FOR RESPECTIVE QUESTION
     var selectPanel = $('body').find(".mdl-tabs__tab").attr('href');
     $('body').find(selectPanel).addClass("is-active");
+//    ADD DISABLED CLASS TO ALL BUTTONS ON LEFT (FIRST ONE WILL ALWAYS BE ACTIVE)
+    $(".mdl-tabs__tab").addClass("vertical-mdl-tabs-disabled");
 
     $(".mdl-tabs__tab").on("click", function () {
         //REMOVE ACTIVE CLASS FOR ALL PANELS
@@ -23,7 +25,6 @@ $(document).ready(function () {
     var quesId = Object.values(quesIdList)[0];
     var jArray = $('#rawData' + quesId).val();
     renderChartsByQuestion(quesId, jArray);
-//    $('#loader').css('display', 'none');
 });
 var quesIds = $('#questionIdList').val();
 quesIdList = $.parseJSON(quesIds);
@@ -760,7 +761,6 @@ function renderChartsByQuestion(quesId, jArray) {
 function loadData(quesId) {
     var divToCheck = $('body').find("#tab" + quesId + "-panel");
     if (divToCheck.length === 0) {
-//        $('#loader').css('display', 'block');
         $.ajax({
             type: "POST",
             data: {
@@ -773,12 +773,10 @@ function loadData(quesId) {
                 $response = $(res);
                 var jArray = $response.filter('#rawData' + quesId).val();
                 renderChartsByQuestion(quesId, jArray);
-                $('#loader').css('display', 'none');
-
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
+//                $('body').find("#question-tab-" + quesId).fadeOut("slow", function () {
+//                    $(this).removeClass("vertical-mdl-tabs-disabled");
+//                });
+                $('body').find("#question-tab-" + quesId).removeClass("vertical-mdl-tabs-disabled");
             }
         });
     }
@@ -1016,12 +1014,13 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
 function plotResponsiveCharts(chartId) {
     document.getElementById(chartId).style.display = 'none';
     document.getElementById(chartId).style.display = 'block';
-    
+
 //    PLOT CHARTS FOR PG 1 ONLY.
 //    SKIP RENDERALL FOR CHARTS OF OTHER PAGES.
 //    RENDERALL IS BEING CALLED ON TAB CHANGE
     if (chartId.split("_")[0] === 'pg1') {
         dc.renderAll();
+        $('body').find("#question-tab-1").removeClass("vertical-mdl-tabs-disabled");
     }
 }
 
