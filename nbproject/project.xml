@@ -59,6 +59,7 @@
             <word>MaritalStatus</word>
             <word>NA</word>
             <word>NICOBAR</word>
+            <word>Onboarding</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

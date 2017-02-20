@@ -39,7 +39,7 @@
         <!-- Page styles -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
         <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,thin,black,medium&amp;lang=en">-->
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="css/material.min.css">
         <!--<link href="css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
         <link rel="stylesheet" href="css/styles.css">
@@ -65,29 +65,33 @@
             <header class="mdl-layout__header mdl-layout__header--scroll mdl-layout__header--transparent header-shadow">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
-                    <span class="mdl-layout-title">
+                    <span class="android-title mdl-layout-title">
                         <img class="android-logo-image" src="images/Axis_Bank_logo.svg" alt="Axis Bank Logo">
                     </span>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
-                    <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Hiring</a>
-                        <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
-                        <a class="mdl-navigation__link" href="">Attrition</a>
-                        <a class="mdl-navigation__link" href="index.jsp">Logout</a>
-                    </nav>
+                    <div class="android-navigation-container">
+                        <nav class="android-navigation mdl-navigation">
+                            <a class="mdl-navigation__link" href="">Hiring</a>
+                            <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
+                            <a class="mdl-navigation__link" href="">Attrition</a>
+                            <a class="mdl-navigation__link" href="index.jsp">Logout</a>
+                        </nav>
+                    </div>
+                    <span class="android-mobile-title mdl-layout-title">
+                        <img class="android-logo-image" src="images/Axis_Bank_logo.svg" alt="Axis Bank Logo">
+                    </span>
                 </div>
             </header>
-            <!--            <div class="mdl-layout__drawer">
-                            <span class="mdl-layout-title">Title</span>
-                            <nav class="mdl-navigation">
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                                <a class="mdl-navigation__link" href="">Link</a>
-                            </nav>
-                        </div>-->
+            <div class="mdl-layout__drawer">
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="">Hiring</a>
+                    <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
+                    <a class="mdl-navigation__link" href="">Attrition</a>
+                    <a class="mdl-navigation__link" href="index.jsp">Logout</a>
+                </nav>
+            </div>
             <main class="mdl-layout__content">
                 <%
                     int totalTabs = 1;

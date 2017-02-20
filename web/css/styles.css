@@ -837,7 +837,16 @@ select:focus {
     border-top-right-radius: 5em;
     border-bottom-right-radius: 5em;
 }
+
+/*.mdl-tabs__tab-bar{
+    cursor: wait;
+}*/
 /*AXIS DASHBOARD*/
+@media only screen and (min-width:851px){
+    .mdl-layout__drawer-button {
+        display: none;
+    }
+}
 
 @media screen and (max-width: 767px){
     .page-card {
@@ -860,7 +869,7 @@ select:focus {
 @media screen and (max-width: 1024px){
     .mdl-layout__drawer-button {
         margin: 4px;
-        color: #ffffff;
+        color: #ae285d;
     }
 }
 /**** Mobile layout ****/
