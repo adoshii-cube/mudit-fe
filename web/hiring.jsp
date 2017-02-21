@@ -43,11 +43,9 @@
         <link rel="stylesheet" href="css/material.min.css">
         <!--<link href="css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
         <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/mdl-selectfield.min.css">
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+        <!--<link rel="stylesheet" href="css/mdl-selectfield.min.css">-->
         <link rel="stylesheet" type="text/css" href="css/dc.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <link rel='shortcut icon' type='image/x-icon' href='images/OWEN_Favicon.ico'/>
 
@@ -102,7 +100,7 @@
                     <!--<div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>-->
                     <div class="mdl-tabs vertical-mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                         <div class="mdl-grid mdl-grid--no-spacing">
-                            <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-phone">
+                            <div class="mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                                 <div class="mdl-tabs__tab-bar">
                                     <%
                                         ChartHelper ch = new ChartHelper();
@@ -126,7 +124,7 @@
 
                             </div>
 
-                            <div class="mdl-cell mdl-cell--10-col" id="parentDiv">
+                            <div class="mdl-cell mdl-cell--10-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="parentDiv">
                                 <%
                                     JSONArray qIdList = new JSONArray(questionIdList);
                                     Question q = questionList.get(0);

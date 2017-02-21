@@ -29,6 +29,7 @@ $(document).ready(function () {
 var quesIds = $('#questionIdList').val();
 quesIdList = $.parseJSON(quesIds);
 
+//START LOADING DATA FOR NEXT QUESTION
 $.each(quesIdList, function (i, j) {
     var x = $('body').find("#rawData" + j).val();
     if (x === undefined) {
@@ -42,6 +43,11 @@ function renderChartsByQuestion(quesId, jArray) {
     var data = $.parseJSON(jArray);
     if (quesId === 3) {
         var cf = crossfilter(data);
+        
+         data.forEach(function (d) {
+            d.m4 = d3.time.format.utc("%Y-%m-%d").parse(d.m4);
+        });
+        
         var tatMetricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
@@ -103,7 +109,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var tatMetricName4 = cf.dimension(function (d) {
-            return d.m4;
+            return +d.m4;
         });
         var tatMetricNameGroup4 = tatMetricName4.group().reduce(
                 function (p, v) {
@@ -193,6 +199,11 @@ function renderChartsByQuestion(quesId, jArray) {
 
     } else if (quesId === 4) {
         var cf = crossfilter(data);
+        
+         data.forEach(function (d) {
+            d.m4 = d3.time.format.utc("%Y-%m-%d").parse(d.m4);
+        });
+        
         var sohMetricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
@@ -254,7 +265,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var sohMetricName4 = cf.dimension(function (d) {
-            return d.m4;
+            return +d.m4;
         });
         var sohMetricNameGroup4 = sohMetricName4.group().reduce(
                 function (p, v) {
@@ -397,6 +408,10 @@ function renderChartsByQuestion(quesId, jArray) {
     } else {
         var cf = crossfilter(data);
 
+        data.forEach(function (d) {
+            d.m4 = d3.time.format.utc("%Y-%m-%d").parse(d.m4);
+        });
+
         var metricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
@@ -446,7 +461,7 @@ function renderChartsByQuestion(quesId, jArray) {
                 }
         );
         var metricName4 = cf.dimension(function (d) {
-            return d.m4;
+            return +d.m4;
         });
         var metricNameGroup4 = metricName4.group().reduce(
                 function (p, v) {
@@ -758,6 +773,7 @@ function renderChartsByQuestion(quesId, jArray) {
     $('body').find("tab" + quesId + "-panel").addClass("is-active");
 
 }
+
 function loadData(quesId) {
     var divToCheck = $('body').find("#tab" + quesId + "-panel");
     if (divToCheck.length === 0) {
@@ -784,6 +800,7 @@ function loadData(quesId) {
     var selectPanel = $('body').find("#question-tab-" + quesId).attr('href');
     $("body").find(selectPanel).addClass("is-active");
 }
+
 function isCandidateCount(v) {
     return v.type === "candidate_count";
 }
@@ -962,24 +979,33 @@ function createDropdownUsingDc(chartId, cfDimension, cfGroup) {
 }
 
 function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
-//    var minDate = cfDimension.bottom(1)[0].metricName4;
-//    var maxDate = cfDimension.top(1)[0].metricName4;
+    var minDate = cfDimension.bottom(1)[0].m4;
+    var maxDate = cfDimension.top(1)[0].m4;
     var chart = dc.barChart("#" + chartId);
     chart
             .height(75)
-            .x(d3.scale.ordinal())
-            .xUnits(dc.units.ordinal)
-//            .x(d3.time.scale().domain([minDate, maxDate]))
-//            .xUnits(d3.time.months)
-//            .brushOn(true)
+//            .x(d3.scale.ordinal())
+//            .xUnits(dc.units.ordinal)
+            .brushOn(true)
+//            .filter([d3.time.day.offset(minDate, -16), d3.time.day.offset(maxDate, 16)])
             .elasticY(true)
             .dimension(cfDimension)
             .group(cfGroup)
-//            .mouseZoomable(true)
             .showYAxis(false)
-//            .centerBar(true)
-            .colors(['#303f9f']);
-
+            .centerBar(true)
+            .colors(['#303f9f'])
+            .mouseZoomable(true)
+            .barPadding(0.05)
+            .x(d3.time.scale().
+                    domain(
+                            [d3.time.month.offset(minDate, -1), d3.time.month.offset(maxDate, 1)]
+                            )
+                    )
+            .xUnits(d3.time.months)
+            .xAxis()
+            .ticks(d3.time.month, 1)
+            .tickFormat(d3.time.format("%b '%y"));
+   
     chart.on("renderlet", function (chart) {
         var gLabels = chart.select(".labels");
         if (gLabels.empty()) {
