@@ -25,6 +25,12 @@ $(document).ready(function () {
     var quesId = Object.values(quesIdList)[0];
     var jArray = $('#rawData' + quesId).val();
     renderChartsByQuestion(quesId, jArray);
+
+// DO NOT DELETE : Read data from json file 
+//    d3.json("./data" + quesId + ".json", function (error, json) {
+//        var data = JSON.stringify(json);
+//        renderChartsByQuestion(quesId, data);
+//    });
 });
 var quesIds = $('#questionIdList').val();
 quesIdList = $.parseJSON(quesIds);
@@ -43,11 +49,11 @@ function renderChartsByQuestion(quesId, jArray) {
     var data = $.parseJSON(jArray);
     if (quesId === 3) {
         var cf = crossfilter(data);
-        
-         data.forEach(function (d) {
+
+        data.forEach(function (d) {
             d.m4 = d3.time.format.utc("%Y-%m-%d").parse(d.m4);
         });
-        
+
         var tatMetricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
@@ -199,11 +205,11 @@ function renderChartsByQuestion(quesId, jArray) {
 
     } else if (quesId === 4) {
         var cf = crossfilter(data);
-        
-         data.forEach(function (d) {
+
+        data.forEach(function (d) {
             d.m4 = d3.time.format.utc("%Y-%m-%d").parse(d.m4);
         });
-        
+
         var sohMetricName1 = cf.dimension(function (d) {
             return d["m1"];
         });
@@ -789,9 +795,16 @@ function loadData(quesId) {
                 $response = $(res);
                 var jArray = $response.filter('#rawData' + quesId).val();
                 renderChartsByQuestion(quesId, jArray);
+
+// DO NOT DELETE : Read data from json file 
+//                d3.json("./data" + quesId + ".json", function (error, json) {
+//                    var data = JSON.stringify(json);
+//                    renderChartsByQuestion(quesId, data);
+//                });
+
 //                $('body').find("#question-tab-" + quesId).fadeOut("slow", function () {
 //                    $(this).removeClass("vertical-mdl-tabs-disabled");
-//                });
+
                 $('body').find("#question-tab-" + quesId).removeClass("vertical-mdl-tabs-disabled");
             }
         });
@@ -1005,7 +1018,7 @@ function createTimeseriesUsingDc(chartId, cfDimension, cfGroup) {
             .xAxis()
             .ticks(d3.time.month, 1)
             .tickFormat(d3.time.format("%b '%y"));
-   
+
     chart.on("renderlet", function (chart) {
         var gLabels = chart.select(".labels");
         if (gLabels.empty()) {
