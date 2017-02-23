@@ -1,4 +1,3 @@
-<%@page import="org.icube.helper.Stopwatch"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.icube.question.Question"%>
 <%@page import="org.json.JSONArray"%>
@@ -6,6 +5,9 @@
 <%@page import="org.icube.chart.Chart"%>
 <%@page import="java.util.List"%>
 <%@page import="org.icube.chart.ChartHelper"%>
+<%@page import="java.io.FileWriter"%>
+<%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
+<%@page import="com.fasterxml.jackson.databind.SerializationFeature"%> 
 <%-- 
     Document   : hiring
     Created on : 31 Jan, 2017, 4:49:12 PM
@@ -131,18 +133,21 @@
                                     int questionId = q.getPageId();
                                 %>
                                 <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
-                                    <div class="android-card-container">
-                                        <%Stopwatch sw = new Stopwatch();
+                                    <div class="android-card-container">                                        
+                                        <%
                                             List<Metric> rawData = ch.getChartDataForPage(questionId);
-                                            System.out.println("getChartDataForPage : " + sw.elapsedTime());%>
-                                        <%  Stopwatch sw1 = new Stopwatch();
                                             JSONArray rawDataInJSON = new JSONArray(rawData);
-                                            System.out.println("rawDataInJSON data : " + rawDataInJSON.length());
-                                            System.out.println("rawDataInJSON : " + sw1.elapsedTime());%>
-                                        <%Stopwatch sw3 = new Stopwatch();
+                                            String rawDataJSONArray = rawDataInJSON.toString();
+
+                                            // DO NOT DELETE : Write data to json file 
+//                                            ObjectMapper objectMapper = new ObjectMapper();
+//                                            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//                                            String arrayToJson = objectMapper.writeValueAsString(rawData);
+//                                            FileWriter fileWriter = new FileWriter("C:\\Icube\\xampp\\tomcat\\webapps\\axis-dashboard\\data" + questionId + ".json");
+//                                            FileWriter fileWriter = new FileWriter("C:\\json\\data" + questionId + ".json");
+//                                            fileWriter.write(arrayToJson.toString());
+//                                            fileWriter.close();
                                             List<Chart> chartList = ch.getChartMapping(questionId);
-                                            System.out.println("chartList : " + sw3.elapsedTime());%>
-                                        <%Stopwatch sw4 = new Stopwatch();
                                             for (int j = 0; j < chartList.size(); j++) {
                                                 Chart chart = chartList.get(j);
                                                 String chartType = chart.getChartType();
@@ -168,13 +173,10 @@
                                             <input type="hidden" id="pageNumber" value='<%=questionId%>'/>
                                             <input type="hidden" id="totalPages" value='<%=totalTabs%>'/>
                                         </div>
-                                        <%}
-                                            System.out.println("chartList looping : " + sw4.elapsedTime());
-                                        %>
+                                        <%}%>
                                     </div>
                                 </div>
                                 <input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataInJSON%>'/>
-                                <% //}%> 
                                 <input type="hidden" id="questionIdList" value='<%=qIdList%>'/> 
                             </div>
                         </div>

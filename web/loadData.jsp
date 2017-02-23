@@ -9,29 +9,32 @@
 <%@page import="org.icube.chart.ChartHelper"%>
 <%@page import="org.icube.metric.Metric"%>
 <%@page import="java.util.List"%>
+<%@page import="java.io.FileWriter"%>
+<%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
+<%@page import="com.fasterxml.jackson.databind.SerializationFeature"%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--<html>-->
-<!--    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>-->
-<!--<body>-->
-<script>debugger;</script>
+
 <%
     int questionId = Integer.parseInt(request.getParameter("questionId"));
 %>
 <div class="mdl-tabs__panel" id="tab<%=questionId%>-panel"> 
-    
+
     <div class="android-card-container">
         <%
-            System.out.print("calling the loaddata.jsp");
             ChartHelper ch = new ChartHelper();
             List<Metric> rawData = ch.getChartDataForPage(questionId);
             JSONArray rawDataInJSON = new JSONArray(rawData);
             String rawDataJSONArray = rawDataInJSON.toString();
-            List<Chart> chartList = ch.getChartMapping(questionId);
 
+// DO NOT DELETE : Write data to json file 
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//            String arrayToJson = objectMapper.writeValueAsString(rawData);
+//            FileWriter fileWriter = new FileWriter("C:\\json\\data" + questionId + ".json");
+//            fileWriter.write(arrayToJson.toString());
+//            fileWriter.close();
+            List<Chart> chartList = ch.getChartMapping(questionId);
             for (int j = 0; j < chartList.size(); j++) {
                 Chart chart = chartList.get(j);
                 String chartType = chart.getChartType();
@@ -59,8 +62,4 @@
         <%}%>
     </div>
 </div>
-<input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataJSONArray%>'/>  
-<!--<script src="js/dalela.js"></script>-->
-<!--</body>-->
-
-<!--</html>-->
+<input type="hidden" id="rawData<%=questionId%>" value='<%=rawDataInJSON%>'/>  
