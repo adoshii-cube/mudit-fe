@@ -76,7 +76,7 @@
                             <a class="mdl-navigation__link" href="">Hiring</a>
                             <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
                             <a class="mdl-navigation__link" href="">Attrition</a>
-                            <a class="mdl-navigation__link" href="index.jsp">Logout</a>
+                            <a class="mdl-navigation__link" href="index">Logout</a>
                         </nav>
                     </div>
                     <span class="android-mobile-title mdl-layout-title">
@@ -89,7 +89,7 @@
                     <a class="mdl-navigation__link" href="">Hiring</a>
                     <a class="mdl-navigation__link" href="">Onboarding & Engagement</a>
                     <a class="mdl-navigation__link" href="">Attrition</a>
-                    <a class="mdl-navigation__link" href="index.jsp">Logout</a>
+                    <a class="mdl-navigation__link" href="index">Logout</a>
                 </nav>
             </div>
             <main class="mdl-layout__content">

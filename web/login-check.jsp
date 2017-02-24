@@ -13,15 +13,15 @@
             session.setAttribute("username", user.getUserName());
             session.setAttribute("role", user.getRoleId());
             if (user.getRoleId() == 1) {
-                response.sendRedirect("hiring.jsp");
+                response.sendRedirect("hiring");
             } else {
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("index");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
 
         }
     } else {
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("index");
     }
 %>
